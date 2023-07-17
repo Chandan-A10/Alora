@@ -2,6 +2,7 @@ import {Cart} from "../components/CartPage";
 import { AdminDashboard } from "../pages/Admin/Dashboard";
 import { LoginPage } from "../pages/Auth/LoginPage";
 import { SignUpPage } from "../pages/Auth/SignUpPage";
+import ProductsPage from "../pages/ProductsPage";
 import { VendorDashBoard } from "../pages/Vendor/Dashboard";
 import { Dashboard } from "../pages/user/Dashboard";
 
@@ -38,6 +39,10 @@ export const publicRoutes=[
     ,{
         path:'/cart',
         element:<Cart/>
+    },
+    {
+        path:'/products',
+        element:<ProductsPage/>
     }
 ]
 

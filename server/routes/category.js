@@ -1,10 +1,10 @@
 const express = require("express");
 const router=express.Router()
-const { checkTokenValidity, isVendor } = require("../middleware/authMiddleware");
+const { checkTokenValidity, isVendor, isAdmin } = require("../middleware/authMiddleware");
 const { createcategory, updateCategory, getAllcategoryController, getSingleCategory, deleteCategory } = require("../controllers/categoryController");
 
 //routes for creating categories
-router.post('/create-category',checkTokenValidity,isVendor,createcategory)
+router.post('/create-category',checkTokenValidity,isAdmin,createcategory)
 
 //routes for updating categories
 router.put('/update-category/:id',checkTokenValidity,isVendor,updateCategory)
@@ -16,6 +16,6 @@ router.get('/category',getAllcategoryController)
 router.get('/single-category/:slug',getSingleCategory)
 
 //delete category route
-router.delete('/delete-category/:id',checkTokenValidity,isVendor,deleteCategory)
+router.delete('/delete-category/:id',checkTokenValidity,isAdmin,deleteCategory)
 
 module.exports=router

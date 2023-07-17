@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../components/layout/layout";
 import { Carousel } from "react-bootstrap";
 import Card from "@mui/material/Card";
@@ -13,6 +13,9 @@ import book from "../images/books.jpg";
 import game from "../images/game.jpg";
 import beauty from "../images/beauty.jpg";
 import Grid from "@mui/material/Grid";
+import { getCategories } from "../utils/getCaterogies";
+import Spinner from "../components/Spinner";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 const responsive = {
   desktop: {
@@ -33,10 +36,17 @@ const responsive = {
 };
 export const HomePage = () => {
   const [index, setIndex] = useState(0);
-
+  const [categories, setcategories] = useState([])
+  const navigate = useNavigate()
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
+  useEffect(()=>{
+    getCategories(setcategories)
+  },[])
+  const handleClick = (e) =>{
+    navigate({pathname:'/products',search:createSearchParams({category:e.target.value}).toString()})
+  }
   return (
     <>
       <Layout>
@@ -87,8 +97,8 @@ export const HomePage = () => {
               marginTop: "-20%",
             }}
           >
-            {Array.from({ length: 8 }).map((_, idx) => (
-              <Grid md={6} lg={3} style={{ padding: "10px" }}>
+            {categories ? categories.map((cat, idx) => (
+              <Grid key={idx} md={6} lg={4} style={{ padding: "10px" }}>
                 <Card
                   sx={{
                     padding: "20px",
@@ -101,7 +111,7 @@ export const HomePage = () => {
                     component="div"
                     className="titleCat"
                   >
-                    Electronics
+                    {cat?.name}
                   </Typography>
                   <CardMedia
                     component="img"
@@ -114,6 +124,8 @@ export const HomePage = () => {
                     style={{ marginLeft: "-10px" }}
                   >
                     <Button
+                    value={cat.name}
+                    onClick={handleClick}
                       size="small"
                       style={{
                         fontSize: "12px",
@@ -125,7 +137,10 @@ export const HomePage = () => {
                   </CardActions>
                 </Card>
               </Grid>
-            ))}
+            ))
+            :
+            <Spinner/>
+          }
             <Grid
               lg={12}
               style={{

@@ -9,6 +9,7 @@ import AllVendors from "../AdminControl/AllVendors";
 import DisabledVendors from "../AdminControl/DisabledVendor";
 import UpdateProfile from "../UpdateProfile";
 import AllProducts from "../AdminControl/AllProducts";
+import CategoryMenu from "../AdminControl/Category";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -26,8 +27,9 @@ const AdminMenu = () => {
       getItem("All Vendors", "1"),
       getItem("Disabled Vendor", "2"),
     ]),
-    getItem("Product List", "sub2", <AppstoreOutlined />, [
+    getItem("Product & Categories", "sub2", <AppstoreOutlined />, [
       getItem("All Products", "3"),
+      getItem("Categories", "4"),
     ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
@@ -65,6 +67,7 @@ const AdminMenu = () => {
       {parseInt(selectedKey) === 1 && <AllVendors />}
       {parseInt(selectedKey) === 2 && <DisabledVendors />}
       {parseInt(selectedKey) === 3 && <AllProducts />}
+      {parseInt(selectedKey) === 4 && <CategoryMenu />}
       {parseInt(selectedKey) === 6 && <UpdateProfile />}
     </div>
   );

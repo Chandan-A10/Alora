@@ -3,6 +3,7 @@ const app = express();
 const authRoute = require("./routes/auth");
 const categoryRoute = require("./routes/category");
 const productRouter = require("./routes/products");
+const cartRouter = require("./routes/cart");
 const cors = require("cors");
 const connectDB = require("./config/db");
 require("dotenv").config();
@@ -24,6 +25,9 @@ app.use("/api/v1/category", categoryRoute);
 
 //product route
 app.use("/api/v1/products", productRouter);
+
+//cart route
+app.use("/api/v1/cart", cartRouter);
 
 app.use("/userimages",express.static("uploads/users"))
 app.listen(8000, (err) => {
