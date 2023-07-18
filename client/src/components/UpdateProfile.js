@@ -90,13 +90,16 @@ const UpdateProfile = () => {
             onChange={handleChange}
           >
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt="avatar"
-                style={{
-                  width: "100%",
-                }}
-              />
+                <img
+                  src={imageUrl}
+                  alt="avatar"
+                  style={{
+                    borderRadius:'100%',
+                    height:'100%',
+                    objectFit:'contain',
+                    width: "100%",
+                  }}
+                />
             ) : (
               uploadButton
             )}

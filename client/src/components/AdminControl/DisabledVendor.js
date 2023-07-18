@@ -1,52 +1,94 @@
-import { Avatar, List, Skeleton } from "antd";
+import { Avatar, Button, List, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getAllDisableVendors } from "../../utils/getAllDisabledVendor";
+import EnableConfirmation from "../ConfirmationModals/EnableConfirmation";
+import ProductModals from "../ProductComps/ProductModals";
 
-const count = 10;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
-
-const DisabledVendors = () => {
+const DisabledVendorComp = () => {
   const [initLoading, setInitLoading] = useState(true);
+  const [disableOpen, setdisableOpen] = useState(false);
+  const [products, setproducts] = useState(false);
+  const [name, setname] = useState("");
+  const [vendorid, setvendorid] = useState("")
+  const [flag, setflag] = useState(true);
+  const user = useSelector((state) => state?.data);
   const [list, setList] = useState([]);
   useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setList(res.results);
-      });
-  }, []);
+    getAllDisableVendors(user?.token,setList)
+    setInitLoading(false);
+    //eslint-disable-next-line
+  }, [flag]);
 
+  const handleDisable = (name,id) => {
+    setname(name);
+    setvendorid(id)
+    setdisableOpen(true);
+  };
+  const handleShowProduct = (name, id) => {
+    setname(name);
+    setvendorid(id);
+    setproducts(true);
+  };
   return (
     <>
-    <div>
-      <List
-        className="demo-loadmore-list"
-        loading={initLoading}
-        itemLayout="horizontal"
-        dataSource={list}
-        style={{width:'90%'}}
-        renderItem={(item) => (
+      <div>
+        <List
+          className="demo-loadmore-list"
+          loading={initLoading}
+          itemLayout="horizontal"
+          dataSource={list}
+          style={{ width: "90%" }}
+          renderItem={(item) => (
             <List.Item
-            actions={[
-              <Link key="list-loadmore-enable">enable</Link>,
-              <Link key="list-loadmore-products">products</Link>,
-            ]}
-          >
-            <Skeleton avatar title={false} loading={item.loading} active>
-              <List.Item.Meta
-                avatar={<Avatar src={item.picture.large} />}
-                title={item.name?.last}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-              />
-            </Skeleton>
-          </List.Item>
-        )}
-      />
-      <br></br>
-    </div>
+              actions={[
+                <Button
+                  disabled={!item?.isDisabled}
+                  onClick={() => handleDisable(item?.name,item?._id)}
+                  key="list-loadmore-disable"
+                >
+                  {item?.isDisabled ? "enable" : "enabled"}
+                </Button>,
+                <Button onClick={()=>handleShowProduct(item?.name,item?._id)} key="list-loadmore-products">products</Button>,
+              ]}
+            >
+              <Skeleton avatar title={false} loading={item.loading} active>
+                <List.Item.Meta
+                  avatar={<Avatar src={item?.photo} />}
+                  title={item?.name}
+                  description={
+                    <>
+                      Email Address : {item?.email}
+                      <br /> Contact number : {item?.phone || "not available"}
+                      <br /> Address : {item?.address || "not available"}
+                    </>
+                  }
+                />
+              </Skeleton>
+            </List.Item>
+          )}
+        />
+        <br></br>
+      </div>
+      {disableOpen && (
+        <EnableConfirmation
+          name={name}
+          setflag={setflag}
+          ModalOpen={disableOpen}
+          setModalOpen={setdisableOpen}
+          vendoid={vendorid}
+        />
+      )}
+      {products && (
+        <ProductModals
+          name={name}
+          ModalOpen={products}
+          setModalOpen={setproducts}
+          id={vendorid}
+        />
+      )}
     </>
   );
 };
 
-export default DisabledVendors;
+export default DisabledVendorComp;

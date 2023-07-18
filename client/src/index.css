@@ -16,7 +16,6 @@ header {
 }
 
 .navbar {
-  background-color: #121920 !important;
   z-index: 1;
 }
 .nav-link {
@@ -27,16 +26,13 @@ header {
 }
 .navbar-brand {
   font-family: "Cinzel Decorative", cursive;
-  color: #fefeff;
   letter-spacing: 0.1rem;
-}
-.link :hover {
-  background-color: #e2e7e6 !important;
 }
 
 .nav-item :hover {
-  line-height: 1.5rem;
-  text-decoration: underline;
+  font-weight: bold !important;
+  background-color: #fefeff;
+  color: black !important;
 }
 
 /* ===========================

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { reqLogout } from "../../redux/slice";
 import toast from "react-hot-toast";
+import { Button, Form } from "react-bootstrap";
 
 export const Header = () => {
   const data = useSelector((state) => state.data);
@@ -17,7 +18,10 @@ export const Header = () => {
   };
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary"
+        data-bs-theme="dark"
+      >
         <div className="container-fluid">
           <Link className="link navbar-brand" to="/">
             ALORA
@@ -95,7 +99,10 @@ export const Header = () => {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link className="dropdown-item" to={`/dashboard/${data?.user.role}`}>
+                      <Link
+                        className="dropdown-item"
+                        to={`/dashboard/${data?.user.role}`}
+                      >
                         Dashboard
                       </Link>
                     </li>
@@ -111,7 +118,9 @@ export const Header = () => {
                 </li>
               )}
               <li className="nav-item">
-                <Link className="nav-link" to='/Cart'>Cart ({0})</Link>
+                <Link className="nav-link" to="/Cart">
+                  Cart ({0})
+                </Link>
               </li>
             </ul>
           </div>

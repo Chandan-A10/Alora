@@ -78,7 +78,7 @@ const loginController = async (req, res) => {
         role: user.role,
         phone: user.phone,
         address: user.address,
-        photo:user.photo
+        photo: user.photo,
       },
       token,
     });
@@ -91,27 +91,136 @@ const loginController = async (req, res) => {
   }
 };
 
-const updateUserProfile = async(req,res)=>{
-  console.log(req.file)
-  try{
-    const user = await userModel.findByIdAndUpdate(req.user._id,{...req.body,photo:req.file.filename},{new:true})
-    await user.save()
+const updateUserProfile = async (req, res) => {
+  console.log(req.file);
+  try {
+    const user = await userModel.findByIdAndUpdate(
+      req.user._id,
+      { ...req.body, photo: req.file.filename },
+      { new: true }
+    );
+    await user.save();
     res.status(200).send({
-      success:true,
-      message:'User Updated',
-    })
-  }
-  catch(err){
-    console.log(err)
+      success: true,
+      message: "User Updated",
+    });
+  } catch (err) {
+    console.log(err);
     res.status(500).send({
-      success:false,
-      message:"Failed while updating profile"
-    })
+      success: false,
+      message: "Failed while updating profile",
+    });
   }
-}
+};
+
+const getAllVendors = async (req, res) => {
+  try {
+    const vendors = await userModel.find({ role: 2 });
+    if (vendors) {
+      res.status(200).send({
+        success: true,
+        message: "Success",
+        vendors,
+      });
+    } else {
+      res.status(204).send({
+        success: true,
+        message: "Not found any list",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Failed to get list",
+    });
+  }
+};
+
+const DisableVendor = async (req, res) => {
+  try {
+    const vendor = await userModel.findByIdAndUpdate(
+      req.params.id,
+      { isDisabled: true },
+      { new: true }
+    );
+    if (vendor) {
+      res.status(200).send({
+        success: true,
+        message: "Success, Vendor Disabled",
+      });
+    } else {
+      res.status(204).send({
+        success: false,
+        message: "Not found",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Failed to disable vendor",
+    });
+  }
+};
+
+const EnableVendor = async (req, res) => {
+  try {
+    const vendor = await userModel.findByIdAndUpdate(
+      req.params.id,
+      { isDisabled: false },
+      { new: true }
+    );
+    if (vendor) {
+      res.status(200).send({
+        success: true,
+        message: "Success, Vendor Enable",
+      });
+    } else {
+      res.status(204).send({
+        success: false,
+        message: "Not found",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Failed to enable vendor",
+    });
+  }
+};
+
+const getAllDisableVendors = async (req, res) => {
+  try {
+    const vendors = await userModel.find({ role: 2, isDisabled: true });
+    if (vendors) {
+      res.status(200).send({
+        success: true,
+        message: "Success",
+        vendors,
+      });
+    } else {
+      res.status(204).send({
+        success: true,
+        message: "Not found any disabled Vendor",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Failed to get list",
+    });
+  }
+};
 
 module.exports = {
   registerController,
   loginController,
-  updateUserProfile
+  updateUserProfile,
+  getAllVendors,
+  DisableVendor,
+  getAllDisableVendors,
+  EnableVendor,
 };

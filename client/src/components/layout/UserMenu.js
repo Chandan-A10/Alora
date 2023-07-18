@@ -1,16 +1,9 @@
 import { Menu } from "antd";
 import React, { useState } from "react";
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import AllVendors from "../AdminControl/AllVendors";
-import DisabledVendors from "../AdminControl/DisabledVendor";
+import { MailOutlined, SettingOutlined } from "@ant-design/icons";
 import UpdateProfile from "../UpdateProfile";
-import AllProducts from "../AdminControl/AllProducts";
-import CategoryMenu from "../AdminControl/Category";
-import AllOrders from "../AdminControl/AllOrders";
+import PendingOrders from "../UserControl/PendingOrders";
+import OrderHistory from "../UserControl/OrderHistory";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -22,16 +15,11 @@ function getItem(label, key, icon, children, type) {
   };
 }
 
-const AdminMenu = () => {
+const UserMenu = () => {
   const items = [
-    getItem("Vendors List", "sub1", <MailOutlined />, [
-      getItem("All Vendors", "1"),
-      getItem("Disabled Vendor", "2"),
-    ]),
-    getItem("Product & Categories", "sub2", <AppstoreOutlined />, [
-      getItem("All Products", "3"),
-      getItem("Categories", "4"),
-      getItem("All Orders", "5"),
+    getItem("My Orders", "sub1", <MailOutlined />, [
+      getItem("Pending Orders", "1"),
+      getItem("Order History", "2"),
     ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
@@ -40,7 +28,7 @@ const AdminMenu = () => {
   ];
 
   // submenu keys of first level
-  const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
+  const rootSubmenuKeys = ["sub1", "sub4"];
   const [selectedKey, setSelectedKey] = useState(null);
   const [openKeys, setOpenKeys] = useState(["sub1"]);
   const onOpenChange = (keys) => {
@@ -53,7 +41,12 @@ const AdminMenu = () => {
   };
   return (
     <div
-      style={{ display: "grid", gridTemplateColumns: "0fr 1fr", gap: "3rem" }}
+      style={{
+        display: "grid",
+        backgroundColor: "white",
+        gridTemplateColumns: "0fr 1fr",
+        gap: "3rem",
+      }}
     >
       <Menu
         mode="inline"
@@ -66,13 +59,10 @@ const AdminMenu = () => {
         selectedKeys={selectedKey}
         items={items}
       />
-      {parseInt(selectedKey) === 1 && <AllVendors />}
-      {parseInt(selectedKey) === 2 && <DisabledVendors />}
-      {parseInt(selectedKey) === 3 && <AllProducts />}
-      {parseInt(selectedKey) === 4 && <CategoryMenu />}
-      {parseInt(selectedKey) === 5 && <AllOrders />}
       {parseInt(selectedKey) === 6 && <UpdateProfile />}
+      {parseInt(selectedKey) === 1 && <PendingOrders />}
+      {parseInt(selectedKey) === 2 && <OrderHistory />}
     </div>
   );
 };
-export default AdminMenu;
+export default UserMenu;

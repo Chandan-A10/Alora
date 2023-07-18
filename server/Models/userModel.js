@@ -25,14 +25,19 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    photo:{
-      type:String,
-      default:"",
-      required:true
-    }
+    photo: {
+      type: String,
+      default: "empty",
+      required: true,
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
   },
   {
-    timestamps:true,
+    timestamps: true,
     collection: "Users",
   }
 );

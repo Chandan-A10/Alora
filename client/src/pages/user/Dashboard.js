@@ -3,6 +3,7 @@ import { Layout } from "../../components/layout/layout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { isValidUser } from "../../utils/auth";
+import UserMenu from "../../components/layout/UserMenu";
 
 export const Dashboard = () => {
   const data = useSelector((state) => state.data);
@@ -28,7 +29,7 @@ export const Dashboard = () => {
   return (
     <>
       <Layout>
-        <h2>djndfngkj</h2>
+        <UserMenu/>
       </Layout>
     </>
   );
