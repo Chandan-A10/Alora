@@ -9,6 +9,7 @@ export const getUserOrders = async(token,setorders,id) => {
             }
         });
         if (data?.success) {
+          console.log("dsjsk")
           setorders(data?.orders);
         }
       } catch (err) {

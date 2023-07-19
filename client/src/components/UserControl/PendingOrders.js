@@ -47,13 +47,14 @@ const PendingOrders = () => {
     <div>
       {orders.length === 0 ? (
         <h1>No Pending orders</h1>
-      ) : (
-        <>
-          <MDBContainer fluid>
+        ) : (
+          <>
+          {console.log(orders)}
+          <MDBContainer fluid={true}>
             {orders.map(
               (order, idx) =>
-                order?.user?.name === user?.user?.name && (
-                  <MDBRow className="justify-content-left mb-0">
+                order?.user?.name === user?.user?.name && 
+                  <MDBRow key={idx} className="justify-content-left mb-0">
                     <MDBCol md="12" xl="11">
                       <MDBCard className="shadow-0 border rounded-3 mt-2 mb-3">
                         <MDBCardBody>
@@ -174,7 +175,7 @@ const PendingOrders = () => {
                     </MDBCol>
                   </MDBRow>
                 )
-            )}
+            }
           </MDBContainer>
           {console.log(orders)}
         </>

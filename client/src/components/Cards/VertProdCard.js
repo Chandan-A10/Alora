@@ -3,6 +3,7 @@ import { MDBCol, MDBCard, MDBCardBody, MDBCardImage } from "mdb-react-ui-kit";
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import { Carousel } from "react-bootstrap";
 const VertProdCard = ({ product, name }) => {
   const user = useSelector((state) => state?.data);
   const AddtoCart = () => {
@@ -10,27 +11,28 @@ const VertProdCard = ({ product, name }) => {
     if (Object.keys(cart).length === 0) {
       const obj = {
         customer: user?.user?.email,
-        cart: [{product:product,quantity:1}],
+        cart: [{ product: product, quantity: 1 }],
       };
       localStorage.setItem("cart", JSON.stringify(obj));
     } else {
       cart = JSON.parse(cart);
-      let cartdata = cart.cart
-      const index = cartdata.findIndex((ele)=>ele.product?._id === product._id)
-      console.log(index)
-      if(index === -1){
-        cartdata.push({product:product,quantity:1})
-        cart.cart = cartdata
+      let cartdata = cart.cart;
+      const index = cartdata.findIndex(
+        (ele) => ele.product?._id === product._id
+      );
+      console.log(index);
+      if (index === -1) {
+        cartdata.push({ product: product, quantity: 1 });
+        cart.cart = cartdata;
         localStorage.setItem("cart", JSON.stringify(cart));
-      }
-      else{
-        cartdata = cartdata.map((x)=>{
-            if(x.product._id === product._id){
-                x.quantity++;
-            }
-            return x;
-        })
-        cart.cart = cartdata
+      } else {
+        cartdata = cartdata.map((x) => {
+          if (x.product._id === product._id) {
+            x.quantity++;
+          }
+          return x;
+        });
+        cart.cart = cartdata;
         localStorage.setItem("cart", JSON.stringify(cart));
       }
     }
@@ -48,11 +50,48 @@ const VertProdCard = ({ product, name }) => {
             <p className="text-white mb-0 small">x4</p>
           </div>
         </div>
-        <MDBCardImage
-          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
-          position="top"
-          alt="Laptop"
-        />
+            <Carousel>
+            <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src={
+                    process.env.REACT_APP_API +
+                    `/productimage/${product?.image4}`
+                  }
+                  alt="1st slide"
+                />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src={
+                    process.env.REACT_APP_API +
+                    `/productimage/${product?.image2}`
+                  }
+                  alt="2nd slide"
+                />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src={
+                    process.env.REACT_APP_API +
+                    `/productimage/${product?.image3}`
+                  }
+                  alt="3rd slide"
+                />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src={
+                    process.env.REACT_APP_API +
+                    `/productimage/${product?.image1}`
+                  }
+                  alt="4th slide"
+                />
+              </Carousel.Item>
+            </Carousel>
         <MDBCardBody>
           <div className="d-flex justify-content-between">
             <p className="small">

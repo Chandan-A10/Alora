@@ -4,8 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-export const SignUp = () => {
-  const [open, setOpen] = useState(true);
+export const SignUp = ({register,setregister}) => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [role, setrole] = useState(0);
@@ -25,7 +24,7 @@ export const SignUp = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         setTimeout(() => {
-          setOpen(false);
+          setregister(false);
           navigate("/");
         }, 0);
       } else {
@@ -40,9 +39,9 @@ export const SignUp = () => {
       <Modal
         title="Register"
         centered
-        open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        open={register}
+        onOk={() => setregister(false)}
+        onCancel={() => setregister(false)}
         footer={null}
         width={1000}
       >

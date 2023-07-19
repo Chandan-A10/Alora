@@ -33,7 +33,7 @@ const ProductModals = ({ name, ModalOpen, setModalOpen, id }) => {
                 <div className="row g-0">
                   <div className="col-md-4">
                     <img
-                      src={pro?.photo}
+                      src={process.env.REACT_APP_API+`/productimage/${pro?.image1}`}
                       className="img-fluid rounded-start"
                       alt="..."
                     />

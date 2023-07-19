@@ -117,7 +117,7 @@ export const HomePage = () => {
                     component="img"
                     alt="green iguana"
                     height="300"
-                    image={elc}
+                    image={process.env.REACT_APP_API+`/categoryimages/${cat?.image}` || elc}
                   />
                   <CardActions
                     className="textAction"

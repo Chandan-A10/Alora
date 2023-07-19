@@ -9,8 +9,8 @@ import { InputAdornment, Paper, TextField } from "@mui/material";
 import { Button } from "antd";
 import {LoginOutlined} from "@ant-design/icons"
 
-export const Login = () => {
-  const [open, setOpen] = useState(true);
+export const Login = ({login,setlogin}) => {
+  const [google, setgoogle] = useState(false)
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const Login = () => {
         dispatch(reqLogin({ user: res.data.user, token: res.data.token }));
 
         setTimeout(() => {
-          setOpen(false);
+          setlogin(false);
           navigate("/");
         }, 0);
       } else {
@@ -56,14 +56,17 @@ export const Login = () => {
     event.target.value = limitedValue;
   };
 
+  const handleAuth = ()=>{
+    
+  }
   return (
     <div>
       <Modal
         title="Login"
         centered
-        open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        open={login}
+        onOk={() => setlogin(false)}
+        onCancel={() => setlogin(false)}
         footer={null}
         width={500}
       >
@@ -118,8 +121,8 @@ export const Login = () => {
             <div className="mt-3">
               <a
                 className="w-100 btn btn-outline-dark"
-                href="/users/googleauth"
                 role="button"
+                onClick={handleAuth}
                 style={{ textTransform: "none" }}
               >
                 <img
@@ -132,6 +135,7 @@ export const Login = () => {
               </a>
             </div>
           </form>
+          <Modal open={google} title="selectRole"></Modal>
         </Paper>
       </Modal>
     </div>

@@ -11,11 +11,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import PayNow from "./ProductComps/PayNow";
 import svg from "../images/cart.svg";
+import { useSelector } from "react-redux";
+import { message } from "antd";
 
 export const Cart = () => {
   let subtotal = 0;
   const [paynow, setpaynow] = useState(false);
   const [cart, setcart] = useState([]);
+  const user = useSelector((state) => state.data);
   const [tax, setTax] = useState(parseInt(Math.random() * 10));
 
   useEffect(() => {
@@ -72,7 +75,14 @@ export const Cart = () => {
     console.log(cart);
     localStorage.setItem("cart", JSON.stringify(cart));
   };
-
+  const handlepaynow = ()=>{
+    if(user?.user?.address !=""){
+      setpaynow(true)
+    }
+    else{
+      message.error("You need to update your address before purchasing")
+    }
+  }
   return (
     <Layout>
       <div className="productSlider mb-5 mt-5">
@@ -170,7 +180,7 @@ export const Cart = () => {
                   <span>{subtotal + tax}$</span>
                 </div>
                 <Button
-                  onClick={() => setpaynow(true)}
+                  onClick={handlepaynow}
                   variant="dark"
                   size="md"
                   className="mt-4 w-100"

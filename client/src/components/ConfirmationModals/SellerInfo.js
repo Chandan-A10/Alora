@@ -26,7 +26,7 @@ const SellerInfo = ({ owner }) => {
             />
           </div>
           <div className="modal-body d-flex gap-4">
-            <Avatar style={{display:"flex",alignItems:'center',justifyContent:'center'}} icon={owner.photo || <UserOutlined/>} size={100}></Avatar>
+            <Avatar style={{display:"flex",alignItems:'center',justifyContent:'center'}} icon={<img alt="..." src={process.env.REACT_APP_API+`/userimages/${owner?.photo}`}></img> || <UserOutlined/>} size={100}></Avatar>
             <div className="m-2">
               <table>
                 <tr>

@@ -4,13 +4,17 @@ import { Select } from "antd";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import svg from "../../images/addimg.svg";
 
 const { Option } = Select;
 
-const AddProducts = ({setselected}) => {
+const AddProducts = ({ setselected }) => {
   const [categories, setcategories] = useState([]);
   const [category, setcategory] = useState("");
-  const [photo, setphoto] = useState("");
+  const [image1, setimage1] = useState("");
+  const [image2, setimage2] = useState("");
+  const [image3, setimage3] = useState("");
+  const [image4, setimage4] = useState("");
   const [name, setname] = useState("");
   const [description, setdescription] = useState("");
   const [price, setprice] = useState("");
@@ -27,32 +31,40 @@ const AddProducts = ({setselected}) => {
     productData.append("description", description);
     productData.append("price", price);
     productData.append("quantity", quantity);
-    productData.append("photo", photo);
+    productData.append("image1", image1, image1.name);
+    productData.append("image2", image2, image2.name);
+    productData.append("image3", image3, image3.name);
+    productData.append("image4", image4, image4.name);
     productData.append("category", category);
     productData.append("shipping", shipping);
-    if(e.target.value === "draft"){
-      productData.append("isDraft",true)
+    if (!image1 || !image2 || !image3 || !image4) {
+      toast.error("Image can't be empty");
+      return;
+    }
+    if (e.target.value === "draft") {
+      productData.append("isDraft", true);
     }
     try {
-        console.log(user.token)
+      console.log(user.token);
       const { data } = await axios.post(
-        process.env.REACT_APP_API + "/api/v1/products/create-product",productData,{
-            headers:{
-                Authorization:user?.token
-            }
+        process.env.REACT_APP_API + "/api/v1/products/create-product",
+        productData,
+        {
+          headers: {
+            Authorization: user?.token,
+          },
         }
       );
       if (data?.success) {
         toast.success("Product created succesfully");
-        if(e.target.value==="draft"){
-          setTimeout(()=>{
-            setselected("3")
-          },1000)
-        }
-        else{
-          setTimeout(()=>{
-            setselected("2")
-          },1000)
+        if (e.target.value === "draft") {
+          setTimeout(() => {
+            setselected("3");
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            setselected("2");
+          }, 1000);
         }
       } else {
         toast.error("Error while adding product");
@@ -85,29 +97,77 @@ const AddProducts = ({setselected}) => {
             );
           })}
         </Select>
-        <div className="mb-3">
-          <label className="btn btn-outline-secondary col-md-12">
-            {photo ? photo.name : "Upload images for your Product"}
+        <div className="mb-3 text-center">
+          <form action="/submit" method="post" encType="multipart/form-data">
+            <label htmlFor="image1">
+              <img
+                className="m-2 addp"
+                src={image1 ? URL.createObjectURL(image1) : svg}
+                alt="Image 1"
+                width={150}
+                height={150}
+              />
+            </label>
             <input
               type="file"
-              name="photo"
+              id="image1"
               accept="image/*"
-              onChange={(e) => setphoto(e.target.files[0])}
-              hidden
+              onChange={(e) => setimage1(e.target.files[0])}
+              name="image1"
+              style={{ display: "none" }}
             />
-          </label>
-        </div>
-        <div className="mb-3 text-center">
-          {photo && (
-            <div>
+            <label htmlFor="image2">
               <img
-                src={URL.createObjectURL(photo)}
-                alt="product"
-                height={200}
-                className="img img-responsive"
-              ></img>
-            </div>
-          )}
+                className="m-2 addp"
+                src={image2 ? URL.createObjectURL(image2) : svg}
+                alt="Image 2"
+                width={150}
+                height={150}
+              />
+            </label>
+            <input
+              type="file"
+              id="image2"
+              name="image2"
+              onChange={(e) => setimage2(e.target.files[0])}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <label htmlFor="image3">
+              <img
+                className="m-2 addp"
+                src={image3 ? URL.createObjectURL(image3) : svg}
+                alt="Image 3"
+                width={150}
+                height={150}
+              />
+            </label>
+            <input
+              type="file"
+              id="image3"
+              onChange={(e) => setimage3(e.target.files[0])}
+              name="image3"
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <label htmlFor="image4">
+              <img
+                className="m-2 addp"
+                src={image4 ? URL.createObjectURL(image4) : svg}
+                alt="Image 4"
+                width={150}
+                height={150}
+              />
+            </label>
+            <input
+              type="file"
+              id="image4"
+              accept="image/*"
+              onChange={(e) => setimage4(e.target.files[0])}
+              name="image4"
+              style={{ display: "none" }}
+            />
+          </form>
         </div>
         <div className="mb-3">
           <input
@@ -175,7 +235,11 @@ const AddProducts = ({setselected}) => {
           <button className="btn btn-danger" onClick={handleCreate}>
             Publish Product
           </button>
-          <button className="btn btn-primary m-2" value="draft" onClick={handleCreate}>
+          <button
+            className="btn btn-primary m-2"
+            value="draft"
+            onClick={handleCreate}
+          >
             Draft Product
           </button>
         </div>

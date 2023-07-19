@@ -19,11 +19,12 @@ const CategoryCard = ({ category, setflag}) => {
         <div className="row g-0">
           <div className="col-md-4 mt-3">
             <img
-              src={image}
+              src={process.env.REACT_APP_API+`/categoryimages/${category?.image}` || image}
               style={{ objectFit: "contain" }}
               className="img-fluid"
               alt="..."
             />
+            {console.log()}
           </div>
           <div className="col-md-6">
             <div className="card-body">

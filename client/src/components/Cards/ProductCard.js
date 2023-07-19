@@ -20,7 +20,7 @@ const ProductCard = ({ product, setflag, draft, isAdmin }) => {
         <div className="row g-0">
           <div className="col-md-4 mt-3">
             <img
-              src={image}
+              src={process.env.REACT_APP_API+`/productimage/${product?.image1}`}
               style={{ objectFit: "contain" }}
               className="img-fluid"
               alt="..."
@@ -32,9 +32,9 @@ const ProductCard = ({ product, setflag, draft, isAdmin }) => {
               <p className="card-text">
                 {product.description}
                 <br />
-                {product.price}
+                Price : ${product.price}
                 <br />
-                {product.quantity}
+                quantity:{product.quantity}
               </p>
               <p className="card-text">
                 <small className="text-body-secondary">

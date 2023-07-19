@@ -8,13 +8,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useSelector } from "react-redux";
 import { createCategory } from "../../utils/createCategory";
 
-const CreateCategory = ({ name, setflag, setModalOpen, ModalOpen }) => {
+const CreateCategory = ({ file,name, setflag, setModalOpen, ModalOpen }) => {
   const user = useSelector((state) => state.data);
   const handleClose = () => {
     setModalOpen(false);
   };
   const handleConfirm = async () => {
-    createCategory(name, user?.token);
+    createCategory(name, user?.token,file);
     setTimeout(() => {
       setflag((prev) => !prev);
       setModalOpen(false);

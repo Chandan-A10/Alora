@@ -3,6 +3,7 @@ const categoryModel = require("../Models/categoryModel");
 const createcategory = async (req, res) => {
   try {
     const { name } = req.body;
+    console.log(req.file)
     if (!name) {
       res.send({
         message: "Name is required",
@@ -18,6 +19,7 @@ const createcategory = async (req, res) => {
     const category = await new categoryModel({
       name,
       slug: slugify(name),
+      image:req.file.filename
     }).save();
     res.status(201).send({
       success: true,
@@ -101,12 +103,12 @@ const getSingleCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    const {id}=req.params 
-    await categoryModel.findByIdAndDelete({_id:id})
+    const { id } = req.params;
+    await categoryModel.findByIdAndDelete({ _id: id });
     res.status(200).send({
-      success:true,
-      message:'Category Deleted Successfully'
-    })
+      success: true,
+      message: "Category Deleted Successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send({

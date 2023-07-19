@@ -3,17 +3,18 @@ const productModel = require("../Models/productModel");
 const fs = require("fs");
 const createProductController = async (req, res) => {
   try {
-    const { name } = req.fields;
-    const { photo } = req.files;
+    const { name } = req.body;
+    console.log(req.files)
+    const { image1,image2,image3,image4 } = req.files;
     const product = new productModel({
-      ...req.fields,
+      ...req.body,
+      image1:image1[0].filename,
+      image2:image2[0].filename,
+      image3:image3[0].filename,
+      image4:image4[0].filename,
       slug: slugify(name),
     });
     product.owner = req.user._id;
-    if (photo) {
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
-    }
     await product.save();
     res.status(200).send({
       success: true,

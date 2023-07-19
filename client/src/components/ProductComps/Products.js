@@ -48,7 +48,6 @@ const Products = () => {
         }}
         // onSelect={(e) => setSelectedKey(e.key)}
         //selectedKeys={selectedKey}
-        items={items2}
       />
       <div>
         <MDBContainer fluid className="my-5">
@@ -57,7 +56,7 @@ const Products = () => {
               products.map((pro, idx) => {
                 console.log(pro.category);
                 return (
-                  pro.category.name === name && (
+                  pro.category?.name === name && (
                     <VertProdCard key={idx} name={name} product={pro} />
                   )
                 );
