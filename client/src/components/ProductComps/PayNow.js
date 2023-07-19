@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Divider, Modal } from "antd";
+import { Divider, Modal, message } from "antd";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { placeOrder } from "../../utils/placeOrder";
@@ -20,6 +20,9 @@ const PayNow = ({setTax, setpaynow, paynow, totalprice,setcart }) => {
   const [activecoupon, setactivecoupon] = useState(null);
   const [activelabel, setactivelabel] = useState(0);
   const [coupon, setcoupon] = useState("");
+  if(user?.user?.name==="" || user?.user?.name===undefined){
+    return <>{toast.error("You need to Login First to make payment")}</>
+  }
   const handleClose = () => {
     setpaynow(false);
   };
@@ -131,7 +134,7 @@ const PayNow = ({setTax, setpaynow, paynow, totalprice,setcart }) => {
               margin="dense"
               id="name"
               placeholder="Enter Card number"
-              type="text"
+              type="number"
               fullWidth
               color="info"
               variant="outlined"

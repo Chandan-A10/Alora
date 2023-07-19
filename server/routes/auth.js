@@ -7,6 +7,7 @@ const {
   isVendor,
   isUser,
 } = require("../middleware/authMiddleware");
+
 const multer = require("multer");
 
 const storage = multer.diskStorage({

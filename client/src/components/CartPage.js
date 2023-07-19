@@ -19,7 +19,9 @@ export const Cart = () => {
   const [paynow, setpaynow] = useState(false);
   const [cart, setcart] = useState([]);
   const user = useSelector((state) => state.data);
-  const [tax, setTax] = useState(parseInt(Math.random() * 10));
+  const [tax, setTax] = useState(
+    cart.length === 0 ? 0 : parseInt(Math.random() * 10)
+  );
 
   useEffect(() => {
     setcart(JSON.parse(localStorage.getItem("cart")) || []);
@@ -42,6 +44,7 @@ export const Cart = () => {
     });
     setcart({ ...cart, cart: cartdata });
     localStorage.setItem("cart", JSON.stringify(cart));
+    setTax(parseInt(Math.random() * 10));
   };
 
   const handleincrement = (x) => {
@@ -58,31 +61,26 @@ export const Cart = () => {
     });
     setcart({ ...cart, cart: cartdata });
     localStorage.setItem("cart", JSON.stringify(cart));
+    setTax(parseInt(Math.random() * 10));
   };
 
   const handleRemove = (x) => {
-    console.log("hello2");
-    let cartdata = cart.cart;
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    let cartdata = cart?.cart;
     cartdata = cartdata.filter((el) => {
-      if (el.product._id === x._id) {
-        return false;
-      } else {
-        return true;
-      }
+      return el.product._id !== x._id;
     });
-
-    setcart({ ...cart, cart: cartdata });
-    console.log(cart);
+    cart.cart = cartdata;
     localStorage.setItem("cart", JSON.stringify(cart));
+    setcart(cart);
   };
-  const handlepaynow = ()=>{
-    if(user?.user?.address !=""){
-      setpaynow(true)
+  const handlepaynow = () => {
+    if (user?.user?.address != "") {
+      setpaynow(true);
+    } else {
+      message.error("You need to update your address before purchasing");
     }
-    else{
-      message.error("You need to update your address before purchasing")
-    }
-  }
+  };
   return (
     <Layout>
       <div className="productSlider mb-5 mt-5">
@@ -180,6 +178,7 @@ export const Cart = () => {
                   <span>{subtotal + tax}$</span>
                 </div>
                 <Button
+                  disabled={cart?.cart?.length!==0?false:true}
                   onClick={handlepaynow}
                   variant="dark"
                   size="md"

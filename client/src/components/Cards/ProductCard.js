@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import image from "../../images/books.jpg";
 import DeleteConfir from "../ConfirmationModals/DeleteConfir";
 import SellerInfo from "../ConfirmationModals/SellerInfo";
 

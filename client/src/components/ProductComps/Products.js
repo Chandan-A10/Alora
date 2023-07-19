@@ -7,22 +7,7 @@ import { Menu } from "antd";
 import { MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
 const Products = () => {
-  const items2 = ["UserOutline", "LaptopOutlined", "NotificationOutlined"].map(
-    (icon, index) => {
-      const key = String(index + 1);
-      return {
-        key: `sub${key}`,
-        label: `subnav ${key}`,
-        children: new Array(4).fill(null).map((_, j) => {
-          const subKey = index * 4 + j + 1;
-          return {
-            key: subKey,
-            label: `option${subKey}`,
-          };
-        }),
-      };
-    }
-  );
+  let count = 0;
   const [search] = useSearchParams();
   const [products, setproducts] = useState([]);
   const name = search.get("category");
@@ -34,6 +19,9 @@ const Products = () => {
   useEffect(() => {
     getAllProducts(setproducts);
   }, []);
+  const handleCount=()=>{
+    count++
+  }
   return (
     <div
       style={{ display: "grid", gridTemplateColumns: "0fr 1fr", gap: "3rem" }}
@@ -52,19 +40,24 @@ const Products = () => {
       <div>
         <MDBContainer fluid className="my-5">
           <MDBRow>
-            {products ? (
+            {products.length !== 0 ? (
               products.map((pro, idx) => {
-                console.log(pro.category);
                 return (
-                  pro.category?.name === name && (
-                    <VertProdCard key={idx} name={name} product={pro} />
-                  )
+                  <>
+                    {pro.category?.name === name && (
+                      <>
+                        {handleCount()}
+                        <VertProdCard key={idx} name={name} product={pro} />
+                      </>
+                    )}
+                  </>
                 );
               })
             ) : (
               <Spinner />
             )}
           </MDBRow>
+          {products.length===0?<></>:  count===0 && <h1>No product for this category Available</h1>}
         </MDBContainer>
       </div>
     </div>

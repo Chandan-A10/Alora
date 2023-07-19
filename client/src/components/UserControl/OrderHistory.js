@@ -102,10 +102,10 @@ const OrderHistory = () => {
                             >
                               <div className="d-flex flex-column align-items-right mb-1">
                                 <h4 className="mb-1 me-1">
-                                  ${order.productBought.price * order.quantity}
+                                  ${order?.productBought?.price * order?.quantity}
                                 </h4>
                                 <span>
-                                  <b>Quantity Purchased : {order.quantity}</b>
+                                  <b>Quantity Purchased : {order?.quantity}</b>
                                 </span>
                               </div>
                               <h6
@@ -115,14 +115,14 @@ const OrderHistory = () => {
                                     : "text-success"
                                 }
                               >
-                                Status : {order.status}
+                                Status : {order?.status}
                               </h6>
                               <div className="d-flex flex-column mt-4"> 
                                 <i style={{ color: "grey" }}>
                                   This order was {order?.status} on
                                 </i>
-                                {dateformatter(order.updatedAt)} at{" "}
-                                {timeformatter(order.updatedAt)}
+                                {dateformatter(order?.updatedAt)} at{" "}
+                                {timeformatter(order?.updatedAt)}
                               </div>
                             </MDBCol>
                           </MDBRow>

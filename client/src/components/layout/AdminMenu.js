@@ -11,6 +11,8 @@ import UpdateProfile from "../UpdateProfile";
 import AllProducts from "../AdminControl/AllProducts";
 import CategoryMenu from "../AdminControl/Category";
 import AllOrders from "../AdminControl/AllOrders";
+import PendingOrders from "../UserControl/PendingOrders";
+import OrderHistory from "../UserControl/OrderHistory";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -33,6 +35,10 @@ const AdminMenu = () => {
       getItem("Categories", "4"),
       getItem("All Orders", "5"),
     ]),
+    getItem("My Orders", "sub3", <MailOutlined />, [
+      getItem("Pending Orders", "8"),
+      getItem("Order History", "9"),
+    ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
       getItem("Change Password", "7"),
@@ -40,7 +46,7 @@ const AdminMenu = () => {
   ];
 
   // submenu keys of first level
-  const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
+  const rootSubmenuKeys = ["sub1", "sub2","sub3", "sub4"];
   const [selectedKey, setSelectedKey] = useState(null);
   const [openKeys, setOpenKeys] = useState(["sub1"]);
   const onOpenChange = (keys) => {
@@ -72,6 +78,8 @@ const AdminMenu = () => {
       {parseInt(selectedKey) === 4 && <CategoryMenu />}
       {parseInt(selectedKey) === 5 && <AllOrders />}
       {parseInt(selectedKey) === 6 && <UpdateProfile />}
+      {parseInt(selectedKey) === 8 && <PendingOrders />}
+      {parseInt(selectedKey) === 9 && <OrderHistory />}
     </div>
   );
 };

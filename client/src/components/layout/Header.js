@@ -7,8 +7,8 @@ import { Login } from "../Auth/Login";
 import { SignUp } from "../Auth/Register";
 
 export const Header = () => {
-  const [login, setlogin] = useState(false)
-  const [register, setregister] = useState(false)
+  const [login, setlogin] = useState(false);
+  const [register, setregister] = useState(false);
   const data = useSelector((state) => state.data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,6 +19,10 @@ export const Header = () => {
       navigate("/");
     }, 0);
   };
+  const handleLogin=()=>{
+    setlogin(true)
+    console.log(login)
+  }
   return (
     <>
       <nav
@@ -49,46 +53,50 @@ export const Header = () => {
               </li>
               {!data.user ? (
                 <>
-                  <li className="nav-item">
-                    <Link onClick={()=>setregister(true)} className="nav-link">
+                  <li className="nav-item" onClick={() => setregister(true)}>
+                    <Link
+                      className="nav-link"
+                    >
                       Sign Up
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link onClick={()=>setlogin(true)} className="nav-link">
+                    <Link onClick={handleLogin} className="nav-link">
                       Login
                     </Link>
                   </li>
                 </>
               ) : (
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {data?.user.name}
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link
-                        className="dropdown-item"
-                        to={`/dashboard/${data?.user.role}`}
-                      >
-                        Dashboard
-                      </Link>
-                    </li>
-                    <li>
-                      <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                      <Link onClick={handleLogout} className="dropdown-item">
-                        Logout
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
+                <>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link dropdown-toggle"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {data?.user.name}
+                    </Link>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={`/dashboard/${data?.user.role}`}
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                      <li>
+                        <hr className="dropdown-divider" />
+                      </li>
+                      <li>
+                        <Link onClick={handleLogout} className="dropdown-item">
+                          Logout
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </>
               )}
               <li className="nav-item">
                 <Link className="nav-link" to="/Cart">
@@ -96,8 +104,11 @@ export const Header = () => {
                 </Link>
               </li>
             </ul>
-            {login && <Login login={login} setlogin={setlogin}/>}
-            {register && <SignUp register={register} setregister={setregister}/>}
+            {console.log(login)}
+            {login && <Login login={login} setlogin={setlogin} />}
+            {register && (
+              <SignUp register={register} setregister={setregister} />
+            )}
           </div>
         </div>
       </nav>

@@ -68,6 +68,7 @@ const VertProdCard = ({ product, name }) => {
                     process.env.REACT_APP_API +
                     `/productimage/${product?.image2}`
                   }
+                  style={{overflow:"scroll"}}
                   alt="2nd slide"
                 />
               </Carousel.Item>

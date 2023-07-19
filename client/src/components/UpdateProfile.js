@@ -10,10 +10,10 @@ const UpdateProfile = () => {
   const user = useSelector((state) => state.data);
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(process.env.REACT_APP_API +`/userimages/${user?.user?.photo}`);
-  const [img, setimg] = useState()
+  const [img, setimg] = useState(null)
   const [name, setname] = useState(user?.user?.name || "");
   const [address, setaddress] = useState(user?.user?.address || "");
-  const [phone, setphone] = useState(user?.user?.phone||"");
+  const [phone, setphone] = useState(user?.user?.phone ||"");
   
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -50,10 +50,15 @@ const UpdateProfile = () => {
   );
   const handleSubmit = async(e) => {
     e.preventDefault()
+    // if(img===null){
+    //   return toast.error("Please select an image as well")
+    // }
     const formData=new FormData()
     formData.append("address",address)
     formData.append("phone",phone)
-    formData.append("photo",img,img.name)
+    if(img!==null){
+      formData.append("photo",img,img?.name)
+    }
     formData.append("name",name)
     try {
       const { data } = await axios.post(
@@ -64,6 +69,7 @@ const UpdateProfile = () => {
         });
       if (data?.success) {
         toast.success(data?.message);
+        console.log(data?.user)
       }
     } catch (err) {
       console.log(err);
@@ -135,7 +141,7 @@ const UpdateProfile = () => {
                 Phone
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="exampleInputPhone"
                 value={phone}

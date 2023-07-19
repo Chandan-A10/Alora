@@ -57,7 +57,7 @@ const CategoryMenu = () => {
         color="info"
         variant="standard"
       />
-      <Upload beforeUpload={beforeUpload}>
+      <Upload fileList={file?[file] : []} beforeUpload={beforeUpload}>
         <Button icon={<UploadOutlined />} variant="contained" className="mt-3 ">
           Select File
         </Button>
@@ -67,6 +67,7 @@ const CategoryMenu = () => {
       </Button>
       <CreateCategory
         file={file}
+        setfile={setfile}
         setModalOpen={setopen}
         name={createnew}
         ModalOpen={open}

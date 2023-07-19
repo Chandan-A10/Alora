@@ -33,6 +33,7 @@ app.use("/api/v1/cart", cartRouter);
 //order route
 app.use("/api/v1/order", orderRouter);
 
+
 app.use("/userimages",express.static("uploads/users"))
 app.use("/categoryimages",express.static("uploads/category"))
 app.use("/productimage",express.static("uploads/products"))

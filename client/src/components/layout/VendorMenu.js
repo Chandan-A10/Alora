@@ -9,6 +9,8 @@ import UpdateProfile from "../UpdateProfile";
 import AddProducts from "../VendorControl/AddProducts";
 import ShowVendorProduct from "../VendorControl/ShowVendorProduct";
 import DraftedProducts from "../VendorControl/DraftedProducts";
+import PendingOrders from "../UserControl/PendingOrders";
+import OrderHistory from "../UserControl/OrderHistory";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -24,12 +26,16 @@ const VendorMenu = () => {
   const items = [
     getItem("My Products", "sub1", <MailOutlined />, [
       getItem("Published products", "1"),
-      getItem("Drafted products","3"),
+      getItem("Drafted products", "3"),
       getItem("Add new product", "2"),
     ]),
     getItem("Order Menu", "sub2", <AppstoreOutlined />, [
       getItem("Order History", "4"),
       getItem("Pending Orders", "5"),
+    ]),
+    getItem("My Orders", "sub3", <MailOutlined />, [
+      getItem("Pending Orders", "8"),
+      getItem("Order History", "9"),
     ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
@@ -38,7 +44,7 @@ const VendorMenu = () => {
   ];
 
   // submenu keys of first level
-  const rootSubmenuKeys = ["sub1", "sub2", "sub4"];
+  const rootSubmenuKeys = ["sub1", "sub2", "sub3", "sub4"];
   const [selectedKey, setSelectedKey] = useState(null);
   const [openKeys, setOpenKeys] = useState(["sub1"]);
   const onOpenChange = (keys) => {
@@ -50,7 +56,14 @@ const VendorMenu = () => {
     }
   };
   return (
-    <div style={{ display: "grid", backgroundColor:'white', gridTemplateColumns: "0fr 1fr",gap:'3rem'}}>
+    <div
+      style={{
+        display: "grid",
+        backgroundColor: "white",
+        gridTemplateColumns: "0fr 1fr",
+        gap: "3rem",
+      }}
+    >
       <Menu
         mode="inline"
         openKeys={openKeys}
@@ -62,10 +75,14 @@ const VendorMenu = () => {
         selectedKeys={selectedKey}
         items={items}
       />
-      {parseInt(selectedKey) === 1 && <ShowVendorProduct /> }
-      {parseInt(selectedKey) === 2 && <AddProducts setselected={setSelectedKey}/> }
-      {parseInt(selectedKey) === 3 && <DraftedProducts /> }
-      {parseInt(selectedKey) === 6 && <UpdateProfile /> }
+      {parseInt(selectedKey) === 1 && <ShowVendorProduct />}
+      {parseInt(selectedKey) === 2 && (
+        <AddProducts setselected={setSelectedKey} />
+      )}
+      {parseInt(selectedKey) === 3 && <DraftedProducts />}
+      {parseInt(selectedKey) === 6 && <UpdateProfile />}
+      {parseInt(selectedKey) === 8 && <PendingOrders />}
+      {parseInt(selectedKey) === 9 && <OrderHistory />}
     </div>
   );
 };

@@ -63,8 +63,14 @@ const loginController = async (req, res) => {
         message: "Invalid Password",
       });
     }
+    if(user.isDisabled){
+      return res.status(200).send({
+        success: false,
+        message: "You have been Banned from Alora",
+      });
+    }
     //creating a token if user exists
-    const token = await JWT.sign(
+    const token = JWT.sign(
       { _id: user._id },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1d" }
@@ -92,13 +98,22 @@ const loginController = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  console.log(req.file);
   try {
-    const user = await userModel.findByIdAndUpdate(
-      req.user._id,
-      { ...req.body, photo: req.file.filename },
-      { new: true }
-    );
+    let user;
+    if(req.file){
+      user = await userModel.findByIdAndUpdate(
+        req.user._id,
+        { ...req.body, photo: req.file.filename },
+        { new: true }
+      );
+    }
+    else{
+      user = await userModel.findByIdAndUpdate(
+        req.user._id,
+        { ...req.body},
+        { new: true }
+      );
+    }
     await user.save();
     res.status(200).send({
       success: true,

@@ -27,6 +27,27 @@ const AddProducts = ({ setselected }) => {
   const handleCreate = async (e) => {
     e.preventDefault();
     const productData = new FormData();
+    if (!name || !name.trim()) {
+      return toast.error("Name cannot be blank");
+    }
+    if (!description || !description.trim()) {
+      return toast.error("Description is required");
+    }
+    if (!price || !price.trim()) {
+      return toast.error("Please set the product price");
+    }
+    if (!quantity || !quantity.trim()) {
+      return toast.error("Quantity is neccessary");
+    }
+    if (!category) {
+      return toast.error("Select Category");
+    }
+    if (!shipping) {
+      return toast.error("Select shipping status");
+    }
+    if (!image1 || !image2 || !image3 || !image4) {
+      return toast.error("You need to select atleast 4 images for your product.");
+    }
     productData.append("name", name);
     productData.append("description", description);
     productData.append("price", price);
@@ -37,10 +58,6 @@ const AddProducts = ({ setselected }) => {
     productData.append("image4", image4, image4.name);
     productData.append("category", category);
     productData.append("shipping", shipping);
-    if (!image1 || !image2 || !image3 || !image4) {
-      toast.error("Image can't be empty");
-      return;
-    }
     if (e.target.value === "draft") {
       productData.append("isDraft", true);
     }
@@ -63,7 +80,7 @@ const AddProducts = ({ setselected }) => {
           }, 1000);
         } else {
           setTimeout(() => {
-            setselected("2");
+            setselected("1");
           }, 1000);
         }
       } else {
@@ -104,7 +121,8 @@ const AddProducts = ({ setselected }) => {
                 className="m-2 addp"
                 src={image1 ? URL.createObjectURL(image1) : svg}
                 alt="Image 1"
-                width={150}
+                width={200}
+                style={{objectFit:'contain'}}
                 height={150}
               />
             </label>
@@ -121,7 +139,8 @@ const AddProducts = ({ setselected }) => {
                 className="m-2 addp"
                 src={image2 ? URL.createObjectURL(image2) : svg}
                 alt="Image 2"
-                width={150}
+                width={200}
+                style={{objectFit:'contain'}}
                 height={150}
               />
             </label>
@@ -138,7 +157,8 @@ const AddProducts = ({ setselected }) => {
                 className="m-2 addp"
                 src={image3 ? URL.createObjectURL(image3) : svg}
                 alt="Image 3"
-                width={150}
+                width={200}
+                style={{objectFit:'contain'}}
                 height={150}
               />
             </label>
@@ -155,7 +175,8 @@ const AddProducts = ({ setselected }) => {
                 className="m-2 addp"
                 src={image4 ? URL.createObjectURL(image4) : svg}
                 alt="Image 4"
-                width={150}
+                width={200}
+                style={{objectFit:'contain'}}
                 height={150}
               />
             </label>
