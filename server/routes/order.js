@@ -7,7 +7,7 @@ const router = express.Router()
 router.get("/allorders",checkTokenValidity,getAllOrder)
 
 //getSingleOrders
-router.get("/:id",checkTokenValidity,getSingleOrder)
+router.get("/singleorder",checkTokenValidity,getSingleOrder)
 
 //cancel Order
 router.get("/cancel/:id",checkTokenValidity,CancelOrder)

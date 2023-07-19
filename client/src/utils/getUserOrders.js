@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast';
 
-export const getUserOrders = async(token,setorders,id) => {
+export const getUserOrders = async(token,setorders) => {
     try {
-      console.log(id)
-        const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/order/${id}`,{
+        const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/order/singleorder`,{
             headers:{
                 Authorization:token
             }

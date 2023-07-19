@@ -14,7 +14,7 @@ const OrderHistory = () => {
   const [orders, setorders] = useState([]);
   const user = useSelector((state) => state?.data);
   useEffect(() => {
-    getUserOrders(user?.token, setorders, user?.user?._id);
+    getUserOrders(user?.token, setorders);
     //eslint-disable-next-line
   }, []);
   const dateformatter = (timestamps) => {
@@ -27,6 +27,7 @@ const OrderHistory = () => {
   };
   return (
     <div>
+      {console.log(orders)}
       {orders.length === 0 ? (
         <h1>No Orders</h1>
       ) : (
@@ -42,7 +43,7 @@ const OrderHistory = () => {
                           <MDBRow>
                             <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
                               <img
-                                src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/img%20(4).webp"
+                                src={process.env.REACT_APP_API+`/productimage/${order?.productBought?.image1}`}
                                 fluid
                                 className="w-100"
                               />
