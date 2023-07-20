@@ -63,7 +63,7 @@ const ProductCard = ({ product, setflag, draft, isAdmin }) => {
                   Out of stock
                 </Button>
               )}
-              {product.quantity === 0 && (
+              { product.quantity === 0 && (
                 <Button
                   onClick={() => setinstock(true)}
                   className="mb-2 w-100"

@@ -38,7 +38,7 @@ const CategoryCard = ({ category, setflag}) => {
           </div>
           <div className="col-md-2">
             <div className="card-body">
-            <button className="btn btn-primary mb-2 w-100">Edit</button>
+            {/* <button className="btn btn-primary mb-2 w-100">Edit</button> */}
               {ModalOpen && (
                 <DeleteCategory
                   setflag={setflag}

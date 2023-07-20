@@ -46,6 +46,7 @@ const AllOrders = () => {
             {orders.map(
               (order, idx) =>
                 (
+                  order.productBought &&
                   <MDBRow className="justify-content-left mb-0">
                     <MDBCol md="12" xl="11">
                       <MDBCard className="shadow-0 border rounded-3 mt-2 mb-3">
@@ -112,10 +113,11 @@ const AllOrders = () => {
                             >
                               <div className="d-flex flex-column align-items-right mb-1">
                                 <h4 className="mb-1 me-1">
-                                  ${order.productBought.price * order.quantity}
+                                  {console.log(order)}
+                                  ${order?.productBought?.price * order?.quantity}
                                 </h4>
                                 <span>
-                                  <b>Quantity : {order.quantity}</b>
+                                  <b>Quantity : {order?.quantity}</b>
                                 </span>
                               </div>
                               <h6

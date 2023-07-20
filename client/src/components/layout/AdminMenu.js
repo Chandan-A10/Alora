@@ -41,7 +41,6 @@ const AdminMenu = () => {
     ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
-      getItem("Change Password", "7"),
     ]),
   ];
 
@@ -67,7 +66,7 @@ const AdminMenu = () => {
         onOpenChange={onOpenChange}
         style={{
           width: 256,
-          minHeight:'80vh'
+          minHeight:'90vh'
         }}
         onSelect={(e) => setSelectedKey(e.key)}
         selectedKeys={selectedKey}

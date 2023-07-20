@@ -23,7 +23,6 @@ const UserMenu = () => {
     ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
-      getItem("Change Password", "7"),
     ]),
   ];
 

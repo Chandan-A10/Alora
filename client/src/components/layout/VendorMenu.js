@@ -41,7 +41,6 @@ const VendorMenu = () => {
     ]),
     getItem("Settings", "sub4", <SettingOutlined />, [
       getItem("Update Profile", "6"),
-      getItem("Change Password", "7"),
     ]),
   ];
 
@@ -72,7 +71,7 @@ const VendorMenu = () => {
         onOpenChange={onOpenChange}
         style={{
           width: 256,
-          minHeight: "80vh",
+          minHeight: "90vh",
         }}
         onSelect={(e) => setSelectedKey(e.key)}
         selectedKeys={selectedKey}

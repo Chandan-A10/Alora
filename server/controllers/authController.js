@@ -275,7 +275,7 @@ const googlecheck=async(req,res)=>{
       });
     }
     else{
-      return res.status(204)
+      return res.sendStatus(204)
     }
   }
   catch (err) {

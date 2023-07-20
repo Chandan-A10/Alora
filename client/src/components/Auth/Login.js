@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Divider, Modal } from "antd";
+import { Divider, Modal, Radio, message } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -11,7 +11,9 @@ import { LoginOutlined } from "@ant-design/icons";
 import { GoogleAuth } from "../../utils/GoogleAuth";
 
 export const Login = ({ login, setlogin }) => {
-  const [google, setgoogle] = useState(false);
+  const [userd, setuserd] = useState("");
+  const [greg, setgreg] = useState(false);
+  const [role, setrole] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
@@ -56,20 +58,47 @@ export const Login = ({ login, setlogin }) => {
     // Set the cleaned and limited value back to the input
     event.target.value = limitedValue;
   };
-  
-  const handleAuth = async() => {
-    let stat = await GoogleAuth()
-    if(stat === 100){
-      console.log("unregistered")
-    }
-    else if(stat=202){
+
+  const handleAuth = async () => {
+    let stat = await GoogleAuth();
+    console.log(stat);
+    if (stat?.status === 204) {
+      setgreg(true);
+      setuserd(stat.user)
       return
-    }
-    else{
+    } else if (stat === 202) {
+      return;
+    } else {
       dispatch(reqLogin(stat));
+      setlogin(false)
       navigate("/")
+      return;
     }
   };
+  const onChange=async(e)=>{
+    setrole(e.target.value)
+    let obj=userd
+    obj.role=e.target.value
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/register`,
+        obj
+      );
+      if (res.data.success) {
+        message.success("User Created Successfully")
+        dispatch(reqLogin({ user: res.data.user, token: res.data.token }));
+        setTimeout(() => {
+          setlogin(false);
+          navigate("/");
+        }, 0);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+   
+  }
   return (
     <div>
       <Modal
@@ -146,7 +175,12 @@ export const Login = ({ login, setlogin }) => {
               </a>
             </div>
           </form>
-          <Modal open={google} title="selectRole"></Modal>
+          <Modal open={greg} title="Select your Role" footer={null} onCancel={()=>setgreg(false)}>
+            <Radio.Group onChange={onChange} value={role}>
+              <Radio value={0}>User</Radio>
+              <Radio value={2}>Merchant</Radio>
+            </Radio.Group>
+          </Modal>
         </Paper>
       </Modal>
     </div>
