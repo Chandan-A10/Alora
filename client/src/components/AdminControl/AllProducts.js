@@ -35,7 +35,20 @@ const AllProducts = () => {
       ) : (
         <>
           {spin && <Spinner />}
-          {!spin && <h1>No product Found</h1>}
+          {!spin && (
+            <div
+              style={{
+                minHeight: "80vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h1 style={{ opacity: "0.5" }}>
+                All available product will be visible here
+              </h1>
+            </div>
+          )}
           {spintime()}
         </>
       )}

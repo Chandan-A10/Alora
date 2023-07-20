@@ -14,8 +14,11 @@ const userSlice = createSlice({
     reqLogout: (state, action) => {
       state.data = {};
     },
+    update:(state,action)=>{
+      state.data.user=action.payload
+    }
   },
 });
 
 export default userSlice.reducer;
-export const { reqLogin, reqLogout } = userSlice.actions;
+export const { reqLogin, reqLogout,update } = userSlice.actions;

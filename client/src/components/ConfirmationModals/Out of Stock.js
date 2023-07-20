@@ -6,15 +6,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useSelector } from "react-redux";
-import { cancelOrders } from "../../utils/cancelOrders";
+import { outOfStock } from "../../utils/outOfStock";
 
-const CancelOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
+const OutofStock = ({ product, setflag, setModalOpen, ModalOpen}) => {
   const user = useSelector((state) => state.data);
   const handleClose = () => {
     setModalOpen(false);
   };
   const handleConfirm = async () => {
-    cancelOrders(id,user?.token)
+    outOfStock(product._id,user?.token)
     setTimeout(() => {
       setflag((prev) => !prev);
       setModalOpen(false);
@@ -23,11 +23,11 @@ const CancelOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
   return (
     <div>
       <Dialog open={ModalOpen} onClose={handleClose}>
-        <DialogTitle>Cancel Order</DialogTitle>
+        <DialogTitle>Out of Stock</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure, you want to <b style={{color:'red'}}>Cancel</b> your order "
-            {id}".This process is irreversible and cannot be undone.
+            Are you sure, you want to mark your product "
+            {product.name}" as <b style={{color:'red'}}> OUT OF STOCK? </b>You can edit this later in edit section.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -44,4 +44,4 @@ const CancelOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
   );
 };
 
-export default CancelOrderConfo;
+export default OutofStock;

@@ -78,8 +78,28 @@ const CancelOrder = async (req, res) => {
     });
   }
 };
+
+const delieverOrder = async (req, res) => {
+  console.log(req.params.id)
+try {
+  await orderModel.findByIdAndUpdate(req.params.id,{status:"delievered"},{new:true})
+  res.status(200).send({
+      success:true,
+      message:'Order Delievered Successfully'
+  })
+} catch (err) {
+  console.log(err);
+  res.status(500).send({
+    success: false,
+    message: "Failed to fetch orders",
+    err,
+  });
+}
+};
+
 module.exports = {
   getAllOrder,
   getSingleOrder,
-  CancelOrder
+  CancelOrder,
+  delieverOrder
 };

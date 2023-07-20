@@ -28,11 +28,25 @@ const registerController = async (req, res) => {
       role,
       address,
     }).save();
+
+    const token = JWT.sign(
+      { _id: createUser._id },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1d" }
+    );
     res.status(201).send({
       success: true,
       message: "User created Successfully",
-      createUser,
-    });
+      user:{
+        name: createUser.name,
+        email: createUser.email,
+        role: createUser.role,
+        phone: createUser.phone,
+        address: createUser.address,
+        photo: createUser.photo,
+      },
+      token
+    })
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -118,6 +132,7 @@ const updateUserProfile = async (req, res) => {
     res.status(200).send({
       success: true,
       message: "User Updated",
+      user
     });
   } catch (err) {
     console.log(err);
@@ -230,6 +245,47 @@ const getAllDisableVendors = async (req, res) => {
   }
 };
 
+const googlecheck=async(req,res)=>{
+  try{
+    const {email} = req.body
+    const user = await userModel.findOne({email})
+    if(user){
+      if(user.isDisabled){
+        return res.status(202).send({
+          message:'User banned from Alora'
+        })
+      }
+      const token = JWT.sign(
+        { _id: user._id },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1d" }
+      );
+      res.status(200).send({
+        success: true,
+        message: "Login Successful",
+        user: {
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          phone: user.phone,
+          address: user.address,
+          photo: user.photo,
+        },
+        token,
+      });
+    }
+    else{
+      return res.status(204)
+    }
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Failed to get list",
+    });
+  }
+}
 module.exports = {
   registerController,
   loginController,
@@ -238,4 +294,5 @@ module.exports = {
   DisableVendor,
   getAllDisableVendors,
   EnableVendor,
+  googlecheck
 };

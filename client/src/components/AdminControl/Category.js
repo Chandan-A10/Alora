@@ -3,7 +3,7 @@ import { getCategories } from "../../utils/getCaterogies";
 import CategoryCard from "../Cards/CategoryCard";
 import { Button, TextField } from "@mui/material";
 import CreateCategory from "../ConfirmationModals/CreateCategory";
-import { Upload, message } from "antd";
+import { Divider, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 const CategoryMenu = () => {
@@ -73,12 +73,24 @@ const CategoryMenu = () => {
         ModalOpen={open}
         setflag={setflag}
       />
-      {categories ? (
+      <Divider>Categories</Divider>
+      {categories.length!==0 ? (
         categories.map((each, idx) => {
           return <CategoryCard key={idx} category={each} setflag={setflag} />;
         })
       ) : (
-        <h1>No available Category</h1>
+        <>
+        <div
+        style={{
+          minHeight: "80vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1 style={{ opacity: "0.5" }}>All Categories will show up here</h1>
+      </div>
+        </>
       )}
     </div>
   );

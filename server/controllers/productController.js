@@ -170,6 +170,39 @@ const updateProductController = async (req, res) => {
     });
   }
 };
+const outOfStock = async (req, res) => {
+try {
+  await productModel.findByIdAndUpdate(req.params.id,{quantity:0},{new:true})
+  res.status(200).send({
+      success:true,
+      message:'Order marked Successfully'
+  })
+} catch (err) {
+  console.log(err);
+  res.status(500).send({
+    success: false,
+    message: "Failed to fetch orders",
+    err,
+  });
+}
+};
+const inStock = async (req, res) => {
+  try {
+    console.log(req.body.quantity)
+    await productModel.findByIdAndUpdate(req.params.id,{quantity:req.body.quantity},{new:true})
+    res.status(200).send({
+        success:true,
+        message:'Product marked Successfully'
+    })
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Failed to fetch orders",
+      err,
+    });
+  }
+  };
 module.exports = {
   createProductController,
   getAllProducts,
@@ -178,4 +211,6 @@ module.exports = {
   deleteProduct,
   updateProductController,
   getVendorProducts,
+  outOfStock,
+  inStock
 };

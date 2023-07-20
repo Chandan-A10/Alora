@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Divider, Modal, message } from "antd";
+import { Divider, Modal } from "antd";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { placeOrder } from "../../utils/placeOrder";

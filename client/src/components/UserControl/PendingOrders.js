@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import CancelOrderConfo from "../ConfirmationModals/CancelOrder";
 
 const PendingOrders = () => {
+  let count = 0;
   const [cancel, setcancel] = useState(false);
   const [id, setid] = useState("");
   const [flag, setflag] = useState(true);
@@ -39,29 +40,47 @@ const PendingOrders = () => {
     }
     return false;
   };
+  const handlecount = () => {
+    count++;
+  };
   const handleCancel = (orderid) => {
     setid(orderid);
-    setcancel(true)
+    setcancel(true);
   };
   return (
     <div>
       {orders.length === 0 ? (
-        <h1>No Pending orders</h1>
-        ) : (
-          <>
+        <div
+          style={{
+            minHeight: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ opacity: "0.5" }}>No orders in the queue</h1>
+        </div>
+      ) : (
+        <>
           {console.log(orders)}
           <MDBContainer fluid={true}>
             {orders.map(
               (order, idx) =>
-                order?.user?.name === user?.user?.name && 
+                order?.user?.name === user?.user?.name &&
+                order.status === "pending" && (
                   <MDBRow key={idx} className="justify-content-left mb-0">
+                    {handlecount()}
                     <MDBCol md="12" xl="11">
                       <MDBCard className="shadow-0 border rounded-3 mt-2 mb-3">
                         <MDBCardBody>
                           <MDBRow>
                             <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
                               <img
-                                src={process.env.REACT_APP_API+`/productimage/${order?.productBought?.image1}`}
+                                alt="..."
+                                src={
+                                  process.env.REACT_APP_API +
+                                  `/productimage/${order?.productBought?.image1}`
+                                }
                                 fluid
                                 className="w-100"
                               />
@@ -121,7 +140,9 @@ const PendingOrders = () => {
                             >
                               <div className="d-flex flex-column align-items-right mb-1">
                                 <h4 className="mb-1 me-1">
-                                  ${order?.productBought?.price * order?.quantity}
+                                  $
+                                  {order?.productBought?.price *
+                                    order?.quantity}
                                 </h4>
                                 <span>
                                   <b>Quantity Purchased : {order?.quantity}</b>
@@ -145,6 +166,7 @@ const PendingOrders = () => {
                                   onClick={() => handleCancel(order?._id)}
                                   disabled={
                                     order?.status === "cancelled" ||
+                                    order?.status === "delivered" ||
                                     cancelOrder(order?.createdAt)
                                   }
                                 >
@@ -175,9 +197,27 @@ const PendingOrders = () => {
                     </MDBCol>
                   </MDBRow>
                 )
-            }
+            )}
+
+            {orders.length === 0 ? (
+              <></>
+            ) : (
+              count === 0 && (
+                <div
+                  style={{
+                    minHeight: "80vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 style={{ opacity: "0.5" }}>
+                    No Order in Pending queque
+                  </h1>
+                </div>
+              )
+            )}
           </MDBContainer>
-          {console.log(orders)}
         </>
       )}
     </div>

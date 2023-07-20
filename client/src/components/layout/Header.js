@@ -100,7 +100,7 @@ export const Header = () => {
               )}
               <li className="nav-item">
                 <Link className="nav-link" to="/Cart">
-                  Cart ({0})
+                  Cart
                 </Link>
               </li>
             </ul>

@@ -11,6 +11,8 @@ const {
   getProductPhoto,
   deleteProduct,
   getVendorProducts,
+  outOfStock,
+  inStock
 } = require("../controllers/productController");
 const ExpressFormidable = require("express-formidable");
 const router = express.Router();
@@ -52,6 +54,12 @@ router.get("/product-photo/:pid", getProductPhoto);
 
 //route to delete product
 router.delete("/delete-product/:pid", checkTokenValidity, deleteProduct);
+
+//outOfStock
+router.get("/outofstock/:id",checkTokenValidity,outOfStock)
+
+//inStock
+router.post("/instock/:id",checkTokenValidity,inStock)
 
 //route to update product
 router.put(

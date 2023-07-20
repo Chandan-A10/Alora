@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import DeleteConfir from "../ConfirmationModals/DeleteConfir";
 import SellerInfo from "../ConfirmationModals/SellerInfo";
+import { Button } from "@mui/material";
+import OutofStock from "../ConfirmationModals/Out of Stock";
+import InStockmarked from "../ConfirmationModals/InStock";
 
 const ProductCard = ({ product, setflag, draft, isAdmin }) => {
+  const [stock, setstock] = useState(false);
+  const [instock, setinstock] = useState(false);
   const [ModalOpen, setModalOpen] = useState(false);
   const dateformatter = (timestamps) => {
     const dateobj = new Date(timestamps);
@@ -19,7 +24,9 @@ const ProductCard = ({ product, setflag, draft, isAdmin }) => {
         <div className="row g-0">
           <div className="col-md-4 mt-3">
             <img
-              src={process.env.REACT_APP_API+`/productimage/${product?.image1}`}
+              src={
+                process.env.REACT_APP_API + `/productimage/${product?.image1}`
+              }
               style={{ objectFit: "contain" }}
               className="img-fluid"
               alt="..."
@@ -45,17 +52,37 @@ const ProductCard = ({ product, setflag, draft, isAdmin }) => {
           </div>
           <div className="col-md-2">
             <div className="card-body">
-              {draft || isAdmin ? (
-                <button className="btn btn-primary mb-2 w-100">Edit</button>
-              ) : (
-                <button className="btn btn-danger mb-2 w-100">Disable</button>
+              {draft || isAdmin ? <></> : (
+                <Button
+                  disabled={product.quantity === 0 ? true : false}
+                  onClick={() => setstock(true)}
+                  className="mb-2 w-100"
+                  variant="outlined"
+                  color="error"
+                >
+                  Out of stock
+                </Button>
+              )}
+              {product.quantity === 0 && (
+                <Button
+                  onClick={() => setinstock(true)}
+                  className="mb-2 w-100"
+                  variant="outlined"
+                  color="error"
+                >
+                  Add quantity
+                </Button>
               )}
               {isAdmin && (
                 <>
-                <button className="btn btn-primary mb-2 w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Seller info...
-                </button>
-                <SellerInfo owner={product.owner}/>
+                  <button
+                    className="btn btn-primary mb-2 w-100"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                  >
+                    Seller info...
+                  </button>
+                  <SellerInfo owner={product.owner} />
                 </>
               )}
               {ModalOpen && (
@@ -64,6 +91,22 @@ const ProductCard = ({ product, setflag, draft, isAdmin }) => {
                   ModalOpen={ModalOpen}
                   product={product}
                   setModalOpen={setModalOpen}
+                />
+              )}
+              {stock && (
+                <OutofStock
+                  setflag={setflag}
+                  ModalOpen={stock}
+                  product={product}
+                  setModalOpen={setstock}
+                />
+              )}
+              {instock && (
+                <InStockmarked
+                  setflag={setflag}
+                  ModalOpen={instock}
+                  product={product}
+                  setModalOpen={setinstock}
                 />
               )}
               <button

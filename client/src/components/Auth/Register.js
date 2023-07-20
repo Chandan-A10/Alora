@@ -1,28 +1,38 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { reqLogin } from "../../redux/slice";
 
-export const SignUp = ({register,setregister}) => {
+export const SignUp = ({ register, setregister }) => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [role, setrole] = useState(0);
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
+  const dispacter = useDispatch();
 
   //handling register form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(name.trim()===""){
+      return message.error("Name cannot be blank")
+    }
+    if(password.trim()===""){
+      return message.error("Password cannot be blank")
+    }
     let type;
     role === 0 ? (type = 0) : (type = 2);
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/auth/register`,
-        { name, email, password ,role:type}
+        { name, email, password, role: type }
       );
       if (res.data.success) {
-        toast.success(res.data.message);
+        message.success("User Created Successfully")
+        dispacter(reqLogin({ user: res.data.user, token: res.data.token }));
         setTimeout(() => {
           setregister(false);
           navigate("/");

@@ -67,6 +67,7 @@ const AdminMenu = () => {
         onOpenChange={onOpenChange}
         style={{
           width: 256,
+          minHeight:'80vh'
         }}
         onSelect={(e) => setSelectedKey(e.key)}
         selectedKeys={selectedKey}

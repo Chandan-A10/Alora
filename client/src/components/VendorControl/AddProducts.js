@@ -36,8 +36,14 @@ const AddProducts = ({ setselected }) => {
     if (!price || !price.trim()) {
       return toast.error("Please set the product price");
     }
+    if(price <1){
+      return toast.error("Price cannot be less than 1$")
+    }
     if (!quantity || !quantity.trim()) {
       return toast.error("Quantity is neccessary");
+    }
+    if(quantity<1){
+      return toast.error("Quantity should not be less than 1")
     }
     if (!category) {
       return toast.error("Select Category");
@@ -93,7 +99,6 @@ const AddProducts = ({ setselected }) => {
   };
   return (
     <div>
-      {console.log(categories)}
       <div className="m-1">
         <Select
           bordered={false}
@@ -120,7 +125,7 @@ const AddProducts = ({ setselected }) => {
               <img
                 className="m-2 addp"
                 src={image1 ? URL.createObjectURL(image1) : svg}
-                alt="Image 1"
+                alt="..."
                 width={200}
                 style={{objectFit:'contain'}}
                 height={150}
@@ -138,7 +143,7 @@ const AddProducts = ({ setselected }) => {
               <img
                 className="m-2 addp"
                 src={image2 ? URL.createObjectURL(image2) : svg}
-                alt="Image 2"
+                alt="..."
                 width={200}
                 style={{objectFit:'contain'}}
                 height={150}
@@ -156,7 +161,7 @@ const AddProducts = ({ setselected }) => {
               <img
                 className="m-2 addp"
                 src={image3 ? URL.createObjectURL(image3) : svg}
-                alt="Image 3"
+                alt="..."
                 width={200}
                 style={{objectFit:'contain'}}
                 height={150}
@@ -174,7 +179,7 @@ const AddProducts = ({ setselected }) => {
               <img
                 className="m-2 addp"
                 src={image4 ? URL.createObjectURL(image4) : svg}
-                alt="Image 4"
+                alt="..."
                 width={200}
                 style={{objectFit:'contain'}}
                 height={150}

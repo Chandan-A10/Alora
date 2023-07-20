@@ -11,6 +11,8 @@ import ShowVendorProduct from "../VendorControl/ShowVendorProduct";
 import DraftedProducts from "../VendorControl/DraftedProducts";
 import PendingOrders from "../UserControl/PendingOrders";
 import OrderHistory from "../UserControl/OrderHistory";
+import VproductHistory from "../AdminControl/VproductHistory";
+import VproductPending from "../AdminControl/VproductPending";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -30,8 +32,8 @@ const VendorMenu = () => {
       getItem("Add new product", "2"),
     ]),
     getItem("Order Menu", "sub2", <AppstoreOutlined />, [
-      getItem("Order History", "4"),
-      getItem("Pending Orders", "5"),
+      getItem("Product Order History", "4"),
+      getItem("Product Pending Orders", "5"),
     ]),
     getItem("My Orders", "sub3", <MailOutlined />, [
       getItem("Pending Orders", "8"),
@@ -70,6 +72,7 @@ const VendorMenu = () => {
         onOpenChange={onOpenChange}
         style={{
           width: 256,
+          minHeight: "80vh",
         }}
         onSelect={(e) => setSelectedKey(e.key)}
         selectedKeys={selectedKey}
@@ -79,6 +82,8 @@ const VendorMenu = () => {
       {parseInt(selectedKey) === 2 && (
         <AddProducts setselected={setSelectedKey} />
       )}
+      {parseInt(selectedKey) === 4 && <VproductPending />}
+      {parseInt(selectedKey) === 5 && <VproductHistory />}
       {parseInt(selectedKey) === 3 && <DraftedProducts />}
       {parseInt(selectedKey) === 6 && <UpdateProfile />}
       {parseInt(selectedKey) === 8 && <PendingOrders />}

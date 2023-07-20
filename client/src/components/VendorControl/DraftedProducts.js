@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getVendorProducts } from "../../utils/getVendorProducts";
 import ProductCard from "../Cards/ProductCard";
-import Spinner from "../Spinner";
 
 const DraftedProducts = () => {
   let count = 0;
@@ -35,12 +34,30 @@ const DraftedProducts = () => {
           );
         })
       ) : (
-        <h1>Nothing Here as Well</h1>
+        <div
+          style={{
+            minHeight: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1 style={{ opacity: "0.5" }}>Your Draft will show up here</h1>
+        </div>
       )}
       {products.length === 0 ? (
         <></>
       ) : (
-        count === 0 && <h1>No Drafted Products found</h1>
+        count === 0 && <div
+        style={{
+          minHeight: "80vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1 style={{ opacity: "0.5" }}>No Drafts in your Product List</h1>
+      </div>
       )}
     </div>
   );

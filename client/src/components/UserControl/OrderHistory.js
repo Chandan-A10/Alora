@@ -29,13 +29,22 @@ const OrderHistory = () => {
     <div>
       {console.log(orders)}
       {orders.length === 0 ? (
-        <h1>No Orders</h1>
+        <div
+        style={{
+          minHeight: "80vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1 style={{ opacity: "0.5" }}>All your Order History will show up here</h1>
+      </div>
       ) : (
         <>
           <MDBContainer fluid>
             {orders.map(
               (order, idx) =>
-                order?.user?.name === user?.user?.name && 
+                order?.user?.name === user?.user?.name && order?.status!=="pending" && (
                   <MDBRow className="justify-content-left mb-0">
                     <MDBCol md="12" xl="11">
                       <MDBCard className="shadow-0 border rounded-3 mt-2 mb-3">
@@ -43,7 +52,11 @@ const OrderHistory = () => {
                           <MDBRow>
                             <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
                               <img
-                                src={process.env.REACT_APP_API+`/productimage/${order?.productBought?.image1}`}
+                                alt="..."
+                                src={
+                                  process.env.REACT_APP_API +
+                                  `/productimage/${order?.productBought?.image1}`
+                                }
                                 fluid
                                 className="w-100"
                               />
@@ -103,7 +116,9 @@ const OrderHistory = () => {
                             >
                               <div className="d-flex flex-column align-items-right mb-1">
                                 <h4 className="mb-1 me-1">
-                                  ${order?.productBought?.price * order?.quantity}
+                                  $
+                                  {order?.productBought?.price *
+                                    order?.quantity}
                                 </h4>
                                 <span>
                                   <b>Quantity Purchased : {order?.quantity}</b>
@@ -118,7 +133,7 @@ const OrderHistory = () => {
                               >
                                 Status : {order?.status}
                               </h6>
-                              <div className="d-flex flex-column mt-4"> 
+                              <div className="d-flex flex-column mt-4">
                                 <i style={{ color: "grey" }}>
                                   This order was {order?.status} on
                                 </i>
@@ -132,7 +147,7 @@ const OrderHistory = () => {
                     </MDBCol>
                   </MDBRow>
                 )
-            }
+            )}
           </MDBContainer>
         </>
       )}

@@ -10,7 +10,7 @@ import {
   MDBIcon,
 } from "mdb-react-ui-kit";
 
-const AllOrders = () => {
+const VproductPending = () => {
   const [orders, setorders] = useState([]);
   const user = useSelector((state) => state?.data);
   const dateformatter = (timestamps) => {
@@ -45,7 +45,7 @@ const AllOrders = () => {
           <MDBContainer fluid>
             {orders.map(
               (order, idx) =>
-                (
+                order?.productOwner?.email === user?.user?.email && order?.status!=="pending" && (
                   <MDBRow className="justify-content-left mb-0">
                     <MDBCol md="12" xl="11">
                       <MDBCard className="shadow-0 border rounded-3 mt-2 mb-3">
@@ -120,7 +120,7 @@ const AllOrders = () => {
                               </div>
                               <h6
                                 className={
-                                  order.status === "pending" || order.status === "cancelled"
+                                  order.status === "pending"
                                     ? "text-danger"
                                     : "text-success"
                                 }
@@ -149,4 +149,4 @@ const AllOrders = () => {
   );
 };
 
-export default AllOrders;
+export default VproductPending;

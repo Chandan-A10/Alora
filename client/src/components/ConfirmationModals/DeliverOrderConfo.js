@@ -6,15 +6,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useSelector } from "react-redux";
-import { cancelOrders } from "../../utils/cancelOrders";
+import { delieverOrders } from "../../utils/delieverOrder";
 
-const CancelOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
+const DelieverOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
   const user = useSelector((state) => state.data);
   const handleClose = () => {
     setModalOpen(false);
   };
   const handleConfirm = async () => {
-    cancelOrders(id,user?.token)
+    delieverOrders(id,user?.token)
     setTimeout(() => {
       setflag((prev) => !prev);
       setModalOpen(false);
@@ -23,17 +23,17 @@ const CancelOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
   return (
     <div>
       <Dialog open={ModalOpen} onClose={handleClose}>
-        <DialogTitle>Cancel Order</DialogTitle>
+        <DialogTitle>Deliver Order</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure, you want to <b style={{color:'red'}}>Cancel</b> your order "
+            Are you sure, you want to <b style={{color:'green'}}>deliever</b> your order "
             {id}".This process is irreversible and cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button  onClick={handleClose}>Cancel</Button>
           <Button
-            color="error"
+            color="success"
             onClick={handleConfirm}
           > 
             Confirm
@@ -44,4 +44,4 @@ const CancelOrderConfo = ({ id, setflag, setModalOpen, ModalOpen}) => {
   );
 };
 
-export default CancelOrderConfo;
+export default DelieverOrderConfo;

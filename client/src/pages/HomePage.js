@@ -141,7 +141,7 @@ export const HomePage = () => {
             :
             <Spinner/>
           }
-            <Grid
+            {/* <Grid
               lg={12}
               style={{
                 backgroundColor: "white",
@@ -196,7 +196,7 @@ export const HomePage = () => {
                   </Card>
                 ))}
               </Carous>
-            </Grid>
+            </Grid> */}
           </Grid>
         </div>
       </Layout>

@@ -7,10 +7,11 @@ import { useDispatch } from "react-redux";
 import { reqLogin } from "../../redux/slice";
 import { InputAdornment, Paper, TextField } from "@mui/material";
 import { Button } from "antd";
-import {LoginOutlined} from "@ant-design/icons"
+import { LoginOutlined } from "@ant-design/icons";
+import { GoogleAuth } from "../../utils/GoogleAuth";
 
-export const Login = ({login,setlogin}) => {
-  const [google, setgoogle] = useState(false)
+export const Login = ({ login, setlogin }) => {
+  const [google, setgoogle] = useState(false);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
@@ -44,9 +45,9 @@ export const Login = ({login,setlogin}) => {
   };
   const handleInputChange = (event) => {
     const { value } = event.target;
-    
+
     // Remove any non-digit characters from the input
-    const cleanValue = value.replace(/[^0-9]/g, '');
+    const cleanValue = value.replace(/[^0-9]/g, "");
     // Limit the input to 10 digits
     const limitedValue = cleanValue.slice(0, 10);
 
@@ -55,10 +56,20 @@ export const Login = ({login,setlogin}) => {
     // Set the cleaned and limited value back to the input
     event.target.value = limitedValue;
   };
-
-  const handleAuth = ()=>{
-    
-  }
+  
+  const handleAuth = async() => {
+    let stat = await GoogleAuth()
+    if(stat === 100){
+      console.log("unregistered")
+    }
+    else if(stat=202){
+      return
+    }
+    else{
+      dispatch(reqLogin(stat));
+      navigate("/")
+    }
+  };
   return (
     <div>
       <Modal
@@ -103,8 +114,8 @@ export const Login = ({login,setlogin}) => {
             <button type="submit" class="btn mt-3 btn-primary">
               Submit
             </button>
-              <Divider>OR</Divider>
-              <div style={{display:'flex',justifyContent:'space-evenly'}}>
+            <Divider>OR</Divider>
+            {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
               <TextField
                 size="small"
                 label="Phone Number"
@@ -117,7 +128,7 @@ export const Login = ({login,setlogin}) => {
                 }}
               />
               <Button style={{width:'30%'}}><LoginOutlined/>Login</Button>
-              </div>
+              </div> */}
             <div className="mt-3">
               <a
                 className="w-100 btn btn-outline-dark"

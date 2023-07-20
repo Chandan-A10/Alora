@@ -76,7 +76,7 @@ const AllVendors = () => {
             >
               <Skeleton avatar title={false} loading={item.loading} active>
                 <List.Item.Meta
-                  avatar={<Avatar src={item?.photo} />}
+                  avatar={<Avatar src={process.env.REACT_APP_API+`/userimages/${item?.photo}`}   />}
                   title={item?.name}
                   description={
                     <>
@@ -90,7 +90,8 @@ const AllVendors = () => {
             </List.Item>
             :
             (
-              item?.name.trim().includes(merchant.toLowerCase()) &&
+              <>
+              {item?.name.trim().toLowerCase().includes(merchant.toLowerCase()) &&
             <List.Item
               actions={[
                 <Button
@@ -121,7 +122,8 @@ const AllVendors = () => {
                   }
                 />
               </Skeleton>
-            </List.Item>
+            </List.Item>}
+            </>
             )
           )}
         />

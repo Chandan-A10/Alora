@@ -1,10 +1,11 @@
 import { Upload, message } from "antd";
 import React, { useState } from "react";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Paper } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { update } from "../redux/slice";
 
 const UpdateProfile = () => {
   const user = useSelector((state) => state.data);
@@ -14,6 +15,7 @@ const UpdateProfile = () => {
   const [name, setname] = useState(user?.user?.name || "");
   const [address, setaddress] = useState(user?.user?.address || "");
   const [phone, setphone] = useState(user?.user?.phone ||"");
+  const dispacter = useDispatch()
   
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -53,6 +55,12 @@ const UpdateProfile = () => {
     // if(img===null){
     //   return toast.error("Please select an image as well")
     // }
+    if(address.trim()===""){
+      return message.error("Address cannot be blank")
+    }
+    if(name.trim()===""){
+      return message.error("Name cannot be blank")
+    }
     const formData=new FormData()
     formData.append("address",address)
     formData.append("phone",phone)
@@ -69,7 +77,7 @@ const UpdateProfile = () => {
         });
       if (data?.success) {
         toast.success(data?.message);
-        console.log(data?.user)
+        dispacter(update(data.user))
       }
     } catch (err) {
       console.log(err);

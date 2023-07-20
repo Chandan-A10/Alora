@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBCol, MDBCard, MDBCardBody, MDBCardImage } from "mdb-react-ui-kit";
+import { MDBCol, MDBCard, MDBCardBody } from "mdb-react-ui-kit";
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
@@ -110,15 +110,16 @@ const VertProdCard = ({ product, name }) => {
             <h5 className="text-dark mb-0">${product.price}</h5>
           </div>
 
-          <div class="d-flex justify-content-between mb-2">
+          <div class="d-flex flex-column justify-content-between mb-2">
+            <p class="text-muted mb-0">{product.description}</p>
             <p class="text-muted mb-0">
               Available: <span class="fw-bold">{product.quantity}</span>
             </p>
             <div class="ms-auto text-warning">
-              <Button className="mr-2">More Details</Button>
-              <Button onClick={AddtoCart} variant="contained">
+              {product.quantity !==0 &&<Button onClick={AddtoCart} variant="contained">
                 Add to Cart
-              </Button>
+              </Button>}
+              {product.quantity === 0 && <p style={{color:'red',opacity:0.8}}>out of stock</p>}
             </div>
           </div>
         </MDBCardBody>

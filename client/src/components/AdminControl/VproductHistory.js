@@ -9,22 +9,33 @@ import {
   MDBCardBody,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import { Button } from "@mui/material";
+import CancelOrderConfo from "../ConfirmationModals/CancelOrder";
+import DeleteConfir from "../ConfirmationModals/DeliverOrderConfo";
 
-const AllOrders = () => {
+const VproductHistory = () => {
+    let count=0;
+  const [flag, setflag] = useState(true);
+  const [deliever, setdeliever] = useState(false)
+  const [cancel, setcancel] = useState(false);
+  const [id, setid] = useState("");
   const [orders, setorders] = useState([]);
   const user = useSelector((state) => state?.data);
-  const dateformatter = (timestamps) => {
-    const dateobj = new Date(timestamps);
-    return dateobj.toLocaleDateString();
+  const handleCancel = (orderid) => {
+    setid(orderid);
+    setcancel(true);
   };
-  const timeformatter = (timestamps) => {
-    const dateobj = new Date(timestamps);
-    return dateobj.toLocaleTimeString();
+  const handleDeliever = (orderid) => {
+    setid(orderid);
+    setdeliever(true);
   };
+  const handlecount=()=>{
+    count++
+  }
   useEffect(() => {
     getAllOrders(user?.token, setorders);
     //eslint-disable-next-line
-  }, []);
+  }, [flag]);
   return (
     <div>
       {orders.length === 0 ? (
@@ -45,8 +56,9 @@ const AllOrders = () => {
           <MDBContainer fluid>
             {orders.map(
               (order, idx) =>
-                (
+                order?.productOwner?.email === user?.user?.email && order?.status==="pending" && (
                   <MDBRow className="justify-content-left mb-0">
+                    {handlecount()}
                     <MDBCol md="12" xl="11">
                       <MDBCard className="shadow-0 border rounded-3 mt-2 mb-3">
                         <MDBCardBody>
@@ -120,7 +132,7 @@ const AllOrders = () => {
                               </div>
                               <h6
                                 className={
-                                  order.status === "pending" || order.status === "cancelled"
+                                  order.status === "pending"
                                     ? "text-danger"
                                     : "text-success"
                                 }
@@ -128,12 +140,48 @@ const AllOrders = () => {
                                 Status : {order.status}
                               </h6>
                               <div className="d-flex flex-column mt-4">
-                                <i style={{ color: "grey" }}>
-                                  This order was {order?.status} on
-                                </i>
-                                {dateformatter(order?.updatedAt)} at{" "}
-                                {timeformatter(order?.updatedAt)}
+                                <Button
+                                  variant="contained"
+                                  color="success"
+                                  size="sm"
+                                  onClick={() => handleDeliever(order?._id)}
+                                  disabled={
+                                    order?.status === "cancelled" ||
+                                    order?.status === "delivered"
+                                  }
+                                >
+                                  Deliver
+                                </Button>
+                                <Button
+                                  variant="contained"
+                                  color="error"
+                                  size="sm"
+                                  className="mt-2"
+                                  onClick={() => handleCancel(order?._id)}
+                                  disabled={
+                                    order?.status === "cancelled" ||
+                                    order?.status === "delivered"
+                                  }
+                                >
+                                  Cancel Order
+                                </Button>
                               </div>
+                              {cancel && (
+                                <CancelOrderConfo
+                                  id={id}
+                                  setflag={setflag}
+                                  ModalOpen={cancel}
+                                  setModalOpen={setcancel}
+                                />
+                              )}
+                              {deliever && (
+                                <DeleteConfir
+                                  id={id}
+                                  setflag={setflag}
+                                  ModalOpen={deliever}
+                                  setModalOpen={setdeliever}
+                                />
+                              )}
                             </MDBCol>
                           </MDBRow>
                         </MDBCardBody>
@@ -142,6 +190,24 @@ const AllOrders = () => {
                   </MDBRow>
                 )
             )}
+            {orders.length === 0 ? (
+              <></>
+            ) : (
+              count === 0 && (
+                <div
+                  style={{
+                    minHeight: "80vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 style={{ opacity: "0.5" }}>
+                    No Order in Pending queque
+                  </h1>
+                </div>
+              )
+            )}
           </MDBContainer>
         </>
       )}
@@ -149,4 +215,4 @@ const AllOrders = () => {
   );
 };
 
-export default AllOrders;
+export default VproductHistory;

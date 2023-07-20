@@ -74,4 +74,5 @@ router.get("/isVendor", checkTokenValidity, isVendor, (req, res) => {
     message: "Valid Vendor",
   });
 });
+router.post("/googlecheck",authController.googlecheck)
 module.exports = router;

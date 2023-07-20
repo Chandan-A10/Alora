@@ -75,7 +75,7 @@ export const Cart = () => {
     setcart(cart);
   };
   const handlepaynow = () => {
-    if (user?.user?.address != "") {
+    if (user?.user?.address !== "") {
       setpaynow(true);
     } else {
       message.error("You need to update your address before purchasing");
