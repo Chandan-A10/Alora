@@ -55,10 +55,10 @@ const UpdateProfile = () => {
     // if(img===null){
     //   return toast.error("Please select an image as well")
     // }
-    if(address.trim()===""){
+    if(address?.trim()===""){
       return message.error("Address cannot be blank")
     }
-    if(name.trim()===""){
+    if(name?.trim()===""){
       return message.error("Name cannot be blank")
     }
     const formData=new FormData()

@@ -1,14 +1,9 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { deleteCategoryService } from "../services/categoryService";
 
 export const delCat = async(id,token) => {
     try {
-        const { data } = await axios.delete(
-          process.env.REACT_APP_API + `/api/v1/category/delete-category/${id}`,{
-            headers:{
-                Authorization:token
-            }
-          });
+        const { data } = await deleteCategoryService(id,token)
         if (data?.success) {
           toast.success(data?.message);
         }

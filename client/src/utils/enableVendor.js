@@ -1,13 +1,8 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
 
 export const enableVendor = async (vendorID,token) => {
   try {
-    const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/auth/vendors/enable/${vendorID}`,{
-        headers:{
-            Authorization:token
-        }
-    });
+    const { data } = await enableVendor(vendorID,token)
     if (data?.success) {
       return toast.success("Vendor successfully Enabled")
     }

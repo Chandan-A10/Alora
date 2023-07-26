@@ -8,11 +8,9 @@ const AllProducts = () => {
   const [spin, setspin] = useState(true);
   const [flag, setflag] = useState(true);
   const spintime = () => {
-    {
       setTimeout(() => {
         setspin(false);
       }, 3000);
-    }
   };
   useEffect(() => {
     getAllProducts(setproducts);

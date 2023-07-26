@@ -1,13 +1,8 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { deleteProductService } from "../services/productService";
 export const deleteProduct = async (id,token) => {
   try {
-    const { data } = await axios.delete(
-      process.env.REACT_APP_API + `/api/v1/products/delete-product/${id}`,{
-        headers:{
-            Authorization:token
-        }
-      });
+    const { data } = await deleteProductService(id,token)
     if (data?.success) {
       toast.success(data?.message);
     }

@@ -1,13 +1,9 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { getAllVendorsService } from "../services/vendorService";
 
 export const getAllVendors = async (token, setList) => {
   try {
-    const { data } = await axios.get(process.env.REACT_APP_API+'/api/v1/auth/vendors',{
-        headers:{
-            Authorization:token
-        }
-    });
+    const { data } = await getAllVendorsService(token)
     if (data?.success) {
       setList(data?.vendors);
     }

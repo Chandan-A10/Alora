@@ -1,15 +1,9 @@
-import axios from "axios";
+import { authService, isAdminService, isVendorService } from "../services/authService";
 
 export const isValidUser = async (token) => {
   try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API}/api/v1/auth/validity`,
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
+    
+    const res = await authService(token);
     if (res.data.success) {
       return true;
     } else {
@@ -24,14 +18,7 @@ export const isValidUser = async (token) => {
 //check if user is Admin
 export const isAdmin = async(token) => {
     try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API}/api/v1/auth/isAdmin`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const res = await isAdminService(token)
         if (res.data.success) {
           return true;
         } else {
@@ -46,15 +33,8 @@ export const isAdmin = async(token) => {
 //check if user is vendor
 export const isVendor = async(token) => {
     try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API}/api/v1/auth/isVendor`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        console.log(res.data.message)
+        const res = await isVendorService(token)
+
         if (res.data.success) {
           return true;
         } else {

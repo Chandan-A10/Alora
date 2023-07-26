@@ -91,3 +91,6 @@ header {
 .info{
   font-family: 'Merriweather', serif;
 }
+.nav-item{
+  text-align: center !important;
+}

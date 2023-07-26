@@ -1,15 +1,8 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { getVendorProductsService } from "../services/productService";
 export const getVendorProducts = async (setproducts, token) => {
   try {
-    const { data } = await axios.get(
-      process.env.REACT_APP_API + `/api/v1/products/getproducts`,
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
+    const { data } = await getVendorProductsService(token)
     if (data?.success && data?.products) {
       setproducts(data?.products);
     }

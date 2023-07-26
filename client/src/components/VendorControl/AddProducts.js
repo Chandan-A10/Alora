@@ -27,19 +27,19 @@ const AddProducts = ({ setselected }) => {
   const handleCreate = async (e) => {
     e.preventDefault();
     const productData = new FormData();
-    if (!name || !name.trim()) {
+    if (!name || !name?.trim()) {
       return toast.error("Name cannot be blank");
     }
-    if (!description || !description.trim()) {
+    if (!description || !description?.trim()) {
       return toast.error("Description is required");
     }
-    if (!price || !price.trim()) {
+    if (!price || !price?.trim()) {
       return toast.error("Please set the product price");
     }
     if(price <1){
       return toast.error("Price cannot be less than 1$")
     }
-    if (!quantity || !quantity.trim()) {
+    if (!quantity || !quantity?.trim()) {
       return toast.error("Quantity is neccessary");
     }
     if(quantity<1){

@@ -1,7 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../firebase";
-import { toast } from "react-hot-toast";
-import axios from "axios";
+import { auth } from "../config/firebase";
+import { googleAuthService } from "../services/googleAuthService";
 
 export const GoogleAuth = async () => {
   const provider = new GoogleAuthProvider();
@@ -14,19 +13,8 @@ export const GoogleAuth = async () => {
       email: data.email,
       password: pass,
     };
-    const response = await axios.post("http://localhost:8000/api/v1/auth/googlecheck", obn).then((res) => {
-      console.log(res)
-      if (res.status === 200) {
-        return {user:res.data?.user,token:res.data?.token}
-      } else if (res.status === 202) {
-        toast.error(res.data.message);
-        return res.status;
-      }
-      else if (res.status === 204){
-        console.log(res.status)
-        return {status:res.status,user:obn};
-      }
-    });
+    console.log(data)
+    const response = await googleAuthService(obn);
     return response
   } catch (err) {
     console.log(err);

@@ -3,7 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import {Toaster} from 'react-hot-toast'
 
-export const Layout = (props) => {
+export const Layout = React.memo((props) => {
   return (
     <div>
       <Header />
@@ -14,4 +14,4 @@ export const Layout = (props) => {
       <Footer />
     </div>
   );
-};
+});

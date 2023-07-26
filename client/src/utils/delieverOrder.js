@@ -1,13 +1,9 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { delieverOrderService } from "../services/orderServices";
 
 export const delieverOrders = async (orderid,token) => {
   try {
-    const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/order/delievered/${orderid}`,{
-        headers:{
-            Authorization:token
-        }
-    });
+    const { data } = await delieverOrderService(orderid,token)
     if (data?.success) {
       return toast.success("Order successfully Delivered")
     }

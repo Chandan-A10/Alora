@@ -1,13 +1,9 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { cancelOrdersService } from "../services/orderServices";
 
 export const cancelOrders = async (orderid,token) => {
   try {
-    const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/order/cancel/${orderid}`,{
-        headers:{
-            Authorization:token
-        }
-    });
+    const { data } = await cancelOrdersService(orderid,token)
     if (data?.success) {
       return toast.success("Order successfully Cancelled")
     }

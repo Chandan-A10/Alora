@@ -1,13 +1,9 @@
-import axios from 'axios'
 import { toast } from 'react-hot-toast';
+import { getUserOrdersService } from '../services/orderServices';
 
 export const getUserOrders = async(token,setorders) => {
     try {
-        const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/order/singleorder`,{
-            headers:{
-                Authorization:token
-            }
-        });
+        const { data } = await getUserOrdersService(token)
         if (data?.success) {
           console.log("dsjsk")
           setorders(data?.orders);

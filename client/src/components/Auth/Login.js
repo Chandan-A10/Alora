@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { reqLogin } from "../../redux/slice";
-import { InputAdornment, Paper, TextField } from "@mui/material";
-import { Button } from "antd";
-import { LoginOutlined } from "@ant-design/icons";
+import { Paper, TextField } from "@mui/material";
+//import { Button } from "antd";
+//import { LoginOutlined } from "@ant-design/icons";
 import { GoogleAuth } from "../../utils/GoogleAuth";
 
 export const Login = ({ login, setlogin }) => {
@@ -19,8 +19,9 @@ export const Login = ({ login, setlogin }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  //const phoneNumberRegex = /^[0-9]*$/;
+
   //handling register form submit
-  const phoneNumberRegex = /^[0-9]*$/;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -45,19 +46,21 @@ export const Login = ({ login, setlogin }) => {
       console.log(err);
     }
   };
-  const handleInputChange = (event) => {
-    const { value } = event.target;
 
-    // Remove any non-digit characters from the input
-    const cleanValue = value.replace(/[^0-9]/g, "");
-    // Limit the input to 10 digits
-    const limitedValue = cleanValue.slice(0, 10);
+  //phone number input
+  // const handleInputChange = (event) => {
+  //   const { value } = event.target;
 
-    // Here, you can perform any additional formatting or processing as needed
+  //   // Remove any non-digit characters from the input
+  //   const cleanValue = value.replace(/[^0-9]/g, "");
+  //   // Limit the input to 10 digits
+  //   const limitedValue = cleanValue.slice(0, 10);
 
-    // Set the cleaned and limited value back to the input
-    event.target.value = limitedValue;
-  };
+  //   // Here, you can perform any additional formatting or processing as needed
+
+  //   // Set the cleaned and limited value back to the input
+  //   event.target.value = limitedValue;
+  // };
 
   const handleAuth = async () => {
     let stat = await GoogleAuth();
@@ -159,9 +162,8 @@ export const Login = ({ login, setlogin }) => {
               <Button style={{width:'30%'}}><LoginOutlined/>Login</Button>
               </div> */}
             <div className="mt-3">
-              <a
+              <button
                 className="w-100 btn btn-outline-dark"
-                role="button"
                 onClick={handleAuth}
                 style={{ textTransform: "none" }}
               >
@@ -172,7 +174,7 @@ export const Login = ({ login, setlogin }) => {
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
                 />
                 Login with Google
-              </a>
+              </button>
             </div>
           </form>
           <Modal open={greg} title="Select your Role" footer={null} onCancel={()=>setgreg(false)}>

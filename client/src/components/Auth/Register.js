@@ -47,13 +47,13 @@ export const SignUp = ({ register, setregister }) => {
   return (
     <div>
       <Modal
-        title="Register"
+        title={<><h3>Create new Account</h3></>}
         centered
         open={register}
         onOk={() => setregister(false)}
         onCancel={() => setregister(false)}
         footer={null}
-        width={1000}
+        width={500}
       >
         <form className="register" onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -95,7 +95,7 @@ export const SignUp = ({ register, setregister }) => {
               required
             />
           </div>
-          <div className="form-check form-switch">
+          <div className="form-check form-switch" style={{display:"flex",justifyContent:"center",gap:'0.5rem'}}>
             <input
               className="form-check-input"
               type="checkbox"
@@ -111,6 +111,7 @@ export const SignUp = ({ register, setregister }) => {
               sign up as a merchant ?
             </label>
           </div>
+          <br/>
           <button type="submit" class="btn btn-primary">
             Submit
           </button>

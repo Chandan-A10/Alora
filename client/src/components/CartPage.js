@@ -134,9 +134,9 @@ export const Cart = () => {
                             >
                               -
                             </Button>
-                            {"  ."}
+                            {" ."}
                             {x.quantity}
-                            {".  "}
+                            {". "}
                             <Button
                               disabled={x.quantity === x.product.quantity}
                               onClick={() => handleincrement(x.product)}

@@ -47,11 +47,11 @@ export const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <Link className="nav-link" aria-current="page" to="/">
                   Home
                 </Link>
               </li>
-              {!data.user ? (
+              {!data?.user ? (
                 <>
                   <li className="nav-item" onClick={() => setregister(true)}>
                     <Link
@@ -104,7 +104,6 @@ export const Header = () => {
                 </Link>
               </li>
             </ul>
-            {console.log(login)}
             {login && <Login login={login} setlogin={setlogin} />}
             {register && (
               <SignUp register={register} setregister={setregister} />

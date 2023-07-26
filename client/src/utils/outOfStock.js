@@ -1,13 +1,9 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { outOfStockService } from "../services/quantityService";
 
 export const outOfStock = async (product_id,token) => {
   try {
-    const { data } = await axios.get(process.env.REACT_APP_API+`/api/v1/products/outofstock/${product_id}`,{
-        headers:{
-            Authorization:token
-        }
-    });
+    const { data } = await outOfStockService(product_id,token)
     if (data?.success) {
       return toast.success("Product successfully marked as OUT OF STOCK")
     }

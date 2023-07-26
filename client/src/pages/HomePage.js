@@ -3,7 +3,7 @@ import { Layout } from "../components/layout/layout";
 import { Carousel } from "react-bootstrap";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import Carous from "react-multi-carousel";
+// import Carous from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
@@ -17,36 +17,39 @@ import { getCategories } from "../utils/getCaterogies";
 import Spinner from "../components/Spinner";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 5,
-    slidesToSlide: 4, // optional, default to 1.
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-    slidesToSlide: 2, // optional, default to 1.
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-    slidesToSlide: 1, // optional, default to 1.
-  },
-};
+// const responsive = {
+//   desktop: {
+//     breakpoint: { max: 3000, min: 1024 },
+//     items: 5,
+//     slidesToSlide: 4, // optional, default to 1.
+//   },
+//   tablet: {
+//     breakpoint: { max: 1024, min: 464 },
+//     items: 2,
+//     slidesToSlide: 2, // optional, default to 1.
+//   },
+//   mobile: {
+//     breakpoint: { max: 464, min: 0 },
+//     items: 1,
+//     slidesToSlide: 1, // optional, default to 1.
+//   },
+// };
 export const HomePage = () => {
   const [index, setIndex] = useState(0);
-  const [categories, setcategories] = useState([])
-  const navigate = useNavigate()
+  const [categories, setcategories] = useState([]);
+  const navigate = useNavigate();
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
-  useEffect(()=>{
-    getCategories(setcategories)
-  },[])
-  const handleClick = (e) =>{
-    navigate({pathname:'/products',search:createSearchParams({category:e.target.value}).toString()})
-  }
+  useEffect(() => {
+    getCategories(setcategories);
+  }, []);
+  const handleClick = (e) => {
+    navigate({
+      pathname: "/products",
+      search: createSearchParams({ category: e.target.value }).toString(),
+    });
+  };
   return (
     <>
       <Layout>
@@ -55,6 +58,7 @@ export const HomePage = () => {
             textAlign: "center",
             display: "flex",
             alignItems: "center",
+            minHeight: "87.1vh",
             flexDirection: "column",
           }}
         >
@@ -67,24 +71,24 @@ export const HomePage = () => {
             onSelect={handleSelect}
           >
             <Carousel.Item>
-            <div class="pickgradient">
-              <img className="d-block w-100"  src={elc} alt="First slide" />
-            </div>
+              <div className="pickgradient">
+                <img className="d-block w-100" src={elc} alt="First slide" />
+              </div>
             </Carousel.Item>
             <Carousel.Item>
-            <div class="pickgradient">
-              <img className="d-block w-100" src={book} alt="Second slide" />
-            </div>
+              <div className="pickgradient">
+                <img className="d-block w-100" src={book} alt="Second slide" />
+              </div>
             </Carousel.Item>
             <Carousel.Item>
-            <div class="pickgradient">
-              <img className="d-block w-100" src={game} alt="Third slide" />
-            </div>
+              <div className="pickgradient">
+                <img className="d-block w-100" src={game} alt="Third slide" />
+              </div>
             </Carousel.Item>
             <Carousel.Item>
-            <div class="pickgradient">
-              <img className="d-block w-100" src={beauty} alt="First slide" />
-            </div>
+              <div className="pickgradient">
+                <img className="d-block w-100" src={beauty} alt="First slide" />
+              </div>
             </Carousel.Item>
           </Carousel>
 
@@ -97,50 +101,61 @@ export const HomePage = () => {
               marginTop: "-20%",
             }}
           >
-            {categories ? categories.map((cat, idx) => (
-              <Grid key={idx} md={6} lg={4} style={{ padding: "10px" }}>
-                <Card
-                  sx={{
-                    padding: "20px",
-                    height: "420px",
-                  }}
+            {categories ? (
+              categories.map((cat, idx) => (
+                <Grid
+                  key={idx}
+                  md={6}
+                  lg={4}
+                  style={{ padding: "10px" }}
                 >
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    className="titleCat"
-                  >
-                    {cat?.name}
-                  </Typography>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="300"
-                    image={process.env.REACT_APP_API+`/categoryimages/${cat?.image}` || elc}
-                  />
-                  <CardActions
-                    className="textAction"
-                    style={{ marginLeft: "-10px" }}
-                  >
-                    <Button
-                    value={cat.name}
+                  <Card
+                    sx={{
+                      padding: "20px",
+                      height: "420px",
+                      cursor: "pointer",
+                    }}
                     onClick={handleClick}
-                      size="small"
-                      style={{
-                        fontSize: "12px",
-                        textDecoration: "underline",
-                      }}
+                  >
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="div"
+                      className="titleCat"
                     >
-                      See more
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))
-            :
-            <Spinner/>
-          }
+                      {cat?.name}
+                    </Typography>
+                    <CardMedia
+                      component="img"
+                      alt="green iguana"
+                      height="300"
+                      image={
+                        process.env.REACT_APP_API +
+                          `/categoryimages/${cat?.image}` || elc
+                      }
+                    />
+                    <CardActions
+                      className="textAction"
+                      style={{ marginLeft: "-10px" }}
+                    >
+                      <Button
+                        value={cat.name}
+                        onClick={handleClick}
+                        size="small"
+                        style={{
+                          fontSize: "12px",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        See more
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))
+            ) : (
+              <Spinner />
+            )}
             {/* <Grid
               lg={12}
               style={{
